@@ -5,7 +5,7 @@
 #' @param epsilon Value to add/subtract from x to ensure log of 0 or 1 is not taken (usually a small number). If \code{NULL}, then the smallest value of any \code{x} > 0 and \code{1 - x} for all \code{x} < 1 is used.
 #' @param base Base of logarithm.
 #' @return Numeric equal to \code{log((x + epsilon)/(1 - x + epsilon), base=base)}.
-#' @seealso \code{\link[omnibus]{probitAdj}}
+#' @seealso \code{\link[statisfactory]{probitAdj}}
 #' @examples
 #' set.seed(123)
 #' x <- seq(0, 1, by=0.01)

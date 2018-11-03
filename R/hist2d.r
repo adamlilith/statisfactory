@@ -30,11 +30,11 @@ hist2d <- function(
 	...
 ) {
 
-	if (!(class(x) %in% c('matrix', 'data.frame'))) stop('Argument "x" in function "hist2d" (omnibus package) must be a matrix or data frame.')
-	if (!(class(breaks1) %in% c('character', 'function', 'numeric', 'integer'))) stop('Argument "breaks1" in function "hist2d" (omnibus package) must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
-	if (!(class(breaks2) %in% c('character', 'function', 'numeric', 'integer'))) stop('Argument "breaks2" in function "hist2d" (omnibus package) must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
-	if (!is.logical(freq)) stop('Argument "freq" in function "hist2d" (omnibus package) must be "TRUE" or "FALSE".')
-	if (!is.logical(right)) stop('Argument "right" in function "hist2d" (omnibus package) must be "TRUE" or "FALSE".')
+	if (!(class(x) %in% c('matrix', 'data.frame'))) stop('Argument "x" in function "hist2d" (statisfactory package) must be a matrix or data frame.')
+	if (!(class(breaks1) %in% c('character', 'function', 'numeric', 'integer'))) stop('Argument "breaks1" in function "hist2d" (statisfactory package) must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
+	if (!(class(breaks2) %in% c('character', 'function', 'numeric', 'integer'))) stop('Argument "breaks2" in function "hist2d" (statisfactory package) must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
+	if (!is.logical(freq)) stop('Argument "freq" in function "hist2d" (statisfactory package) must be "TRUE" or "FALSE".')
+	if (!is.logical(right)) stop('Argument "right" in function "hist2d" (statisfactory package) must be "TRUE" or "FALSE".')
 
 	x1 <- x[ , 1]
 	x2 <- x[ , 2]
