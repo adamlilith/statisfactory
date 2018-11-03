@@ -47,10 +47,13 @@ makeFormulae <- function(
 	verbose=FALSE
 ) {
 
-	pred <- sort(attr(terms(formula), 'term.labels')) # character list of predictors
+	# get response and predictor(s)
+	resp <- all.vars(formula)[1]
+	preds <- all.vars(formula)
+	preds <- preds[2:length(preds)]
 
 	# stop making candidate models when this number of terms have been reached
-	stopAt <- if (is.null(maxTerms)) { length(pred) } else { min(length(pred), maxTerms) }
+	stopAt <- if (is.null(maxTerms)) { length(preds) } else { min(length(preds), maxTerms) }
 
 	### linear term-only models
 	###########################
@@ -61,7 +64,7 @@ makeFormulae <- function(
 
 		for (countTerms in 1:stopAt) {
 
-			modelAsList <- apply(combn(pred, countTerms), 2, as.list)
+			modelAsList <- apply(combn(preds, countTerms), 2, as.list)
 			for (count in seq_along(modelAsList)) linearModels[[length(linearModels) + 1]] <- unlist(modelAsList[[count]])
 			
 		}
@@ -84,7 +87,7 @@ makeFormulae <- function(
 				
 				for (countTerms in 1:stopAt) {
 
-					modelAsList <- apply(combn(pred, countTerms), 2, as.list)
+					modelAsList <- apply(combn(preds, countTerms), 2, as.list)
 					for (count in seq_along(modelAsList)) quadModels[[length(quadModels) + 1]] <- 
 						c(unlist(modelAsList[[count]]), paste('I(', unlist(modelAsList[[count]]), '^2)', sep=''))
 					
@@ -148,7 +151,7 @@ makeFormulae <- function(
 	### models with 2-ways interactions
 	###################################
 		
-		if (ia & length(pred) > 1) {
+		if (ia & length(preds) > 1) {
 
 			iaModels <- list()
 
@@ -157,7 +160,7 @@ makeFormulae <- function(
 			
 			for (countTerms in 2:stopAt) {
 			
-				theseTerms <- combn(pred, countTerms)
+				theseTerms <- combn(preds, countTerms)
 			
 				linearRows <- nrow(theseTerms)
 			
@@ -335,9 +338,11 @@ makeFormulae <- function(
 	if (length(models) > 0) {
 
 		forms <- list()
-		for (countModels in seq_along(models)) forms[[countModels]] <- paste(as.character(formula)[2], '~', ifelse(intercept, '1 +', '-1 + '), paste(models[[countModels]], collapse=' + '))
+		for (countModels in seq_along(models)) {
+			forms[[countModels]] <- paste(resp, '~', ifelse(intercept, '1 +', '-1 + '), paste(models[[countModels]], collapse=' + '))
+		}
 
-		if (interceptOnly) forms[[length(forms) + 1]] <- paste(as.character(formula)[2], '~', 1)
+		if (interceptOnly) forms[[length(forms) + 1]] <- paste(resp, '~', 1)
 
 		forms <- sapply(forms, returnFx)
 		
