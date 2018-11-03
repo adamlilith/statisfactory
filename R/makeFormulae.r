@@ -334,15 +334,17 @@ makeFormulae <- function(
 	### make model formulae
 	if (length(models) > 0) {
 
-		form <- list()
-		for (countModels in seq_along(models)) form[[countModels]] <- paste(as.character(formula)[2], '~', ifelse(intercept, '1 +', '-1 + '), paste(models[[countModels]], collapse=' + '))
+		forms <- list()
+		for (countModels in seq_along(models)) forms[[countModels]] <- paste(as.character(formula)[2], '~', ifelse(intercept, '1 +', '-1 + '), paste(models[[countModels]], collapse=' + '))
 
-		if (interceptOnly) form[[length(form) + 1]] <- paste(as.character(formula)[2], '~', 1)
+		if (interceptOnly) forms[[length(forms) + 1]] <- paste(as.character(formula)[2], '~', 1)
 
-		form <- sapply(form, returnFx)
+		forms <- sapply(forms, returnFx)
 		
-	} else { returnFx(character()) }
+	} else {
+		forms <- returnFx(character())
+	}
 
-	form
+	forms
 
 }
