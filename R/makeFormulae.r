@@ -40,6 +40,7 @@ makeFormulae <- function(
 	linearOnly=TRUE,
 	quad=TRUE,
 	ia=TRUE,
+	verboten=FALSE,
 	verbotenCombos=NULL,
 	minTerms=NULL,
 	maxTerms=NULL,

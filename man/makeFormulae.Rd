@@ -5,9 +5,9 @@
 \title{Make all possible formula}
 \usage{
 makeFormulae(formula, intercept = TRUE, interceptOnly = TRUE,
-  linearOnly = TRUE, quad = TRUE, ia = TRUE, verbotenCombos = NULL,
-  minTerms = NULL, maxTerms = NULL, returnFx = as.formula,
-  verbose = FALSE)
+  linearOnly = TRUE, quad = TRUE, ia = TRUE, verboten = FALSE,
+  verbotenCombos = NULL, minTerms = NULL, maxTerms = NULL,
+  returnFx = as.formula, verbose = FALSE)
 }
 \arguments{
 \item{formula}{A \code{formula} object with \emph{just} linear terms.}
@@ -20,6 +20,8 @@ makeFormulae(formula, intercept = TRUE, interceptOnly = TRUE,
 
 \item{quad}{Logical, if TRUE then include quadratic terms.}
 
+\item{verboten}{Character list of terms that should not appear in the models. Ignored if \code{NULL} (default). Note that using this argument only makes sense if interaction or quadratic terms are specified (if you don't a particular term to appear anywhere in the model it will be faster to remove it from \code{formula}).}
+
 \item{verbotenCombos}{List of lists, used to specify specific combinations of terms that should not occur together. See section \emph{Details} below. Ignored if \code{NULL} (default).}
 
 \item{minTerms}{Either a positive integer representing the minimum number of terms required to be in a model, \emph{or} \code{NULL} (default) in which case the smallest model can have just one term.}
@@ -27,8 +29,6 @@ makeFormulae(formula, intercept = TRUE, interceptOnly = TRUE,
 \item{maxTerms}{Either a positive integer representing the maximum number of terms allowed to be in a model, \emph{or} \code{NULL} (default) in which case there is no practical limit on the number of terms in a model.}
 
 \item{verbose}{Logical, if \code{TRUE} then display progress. Default is \code{FALSE}.}
-
-\item{verboten}{Character list of terms that should not appear in the models. Ignored if \code{NULL} (default). Note that using this argument only makes sense if interaction or quadratic terms are specified (if you don't a particular term to appear anywhere in the model it will be faster to remove it from \code{formula}).}
 }
 \value{
 A vector of formulae.
