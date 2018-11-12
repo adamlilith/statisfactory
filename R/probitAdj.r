@@ -14,7 +14,7 @@
 #' xx <- probitAdj(y, auto = TRUE)
 #' @export
 
-probitAdj <- function(
+probitAdj <- compiler::cmpfun(function(
     x,
     epsilon = 0.01,
     base = 10,
@@ -42,4 +42,4 @@ probitAdj <- function(
 	x <- (base^x + epsilon * base^x - epsilon) / (base^x + 1)
 	x
 
-}
+})

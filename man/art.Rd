@@ -2,7 +2,7 @@
 % Please edit documentation in R/art.r
 \name{art}
 \alias{art}
-\title{Aligned rank transform of non-oaramaric data for further analysis using ANOVA}
+\title{Aligned rank transform of non-parametric data for further analysis using ANOVA}
 \usage{
 art(x, response = names(x)[1], factors = names(x)[2:ncol(x)],
   subject = NULL, fun = function(x) mean(x, na.rm = T),
@@ -43,7 +43,7 @@ x <- data.frame(
 art(x=x, response='response', factors=c('factor1', 'factor2'))
 }
 \references{
-Higgins, J.J., Blair, R.C., and Tashtoush, S.  1990.  The aligned rank transform procedure.  \emph{roceedings of the Conference on Applied Statistics in Agriculture.}  Manhattan, Kansas: Kansas State University, pp. 185-195.
+Higgins, J.J., Blair, R.C., and Tashtoush, S.  1990.  The aligned rank transform procedure.  \emph{Proceedings of the Conference on Applied Statistics in Agriculture.}  Manhattan, Kansas: Kansas State University, pp. 185-195.
 
 Peterson, K.  2002.  Six modifications of the aligned rank transform test for interaction. \emph{Journal of Modern Applied Statistical Methods} 1:100-109.
 

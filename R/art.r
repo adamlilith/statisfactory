@@ -1,4 +1,4 @@
-#' Aligned rank transform of non-oaramaric data for further analysis using ANOVA
+#' Aligned rank transform of non-parametric data for further analysis using ANOVA
 #'
 #' This function performs the aligned rank transforms on non-parametric data. This is useful for further analysis using parametric techniques like ANOVA.
 #' @param x Data frame.
@@ -10,7 +10,7 @@
 #' @return Data frame.
 #' @details The function successfully re-creates rankings given by \strong{ARTool} (Wobbrock et al. 2011) of data in Higgins et al. (1990) for data with 2 and 3 factors.
 #' If \code{response} is ranks and the set of ranks in each cell is the same (e.g., each cell has ranks 1, 2, and 3, but not necessarily in that order), then all values will be equal across the different ART variables.  This occurs because the center of each cell (e.g., the mean) is the same as the grand mean, so the aligned values are simply the residuals. An ANOVA on this data yields no variance across cells, so the F tests are invalid.
-#' @references Higgins, J.J., Blair, R.C., and Tashtoush, S.  1990.  The aligned rank transform procedure.  \emph{roceedings of the Conference on Applied Statistics in Agriculture.}  Manhattan, Kansas: Kansas State University, pp. 185-195.
+#' @references Higgins, J.J., Blair, R.C., and Tashtoush, S.  1990.  The aligned rank transform procedure.  \emph{Proceedings of the Conference on Applied Statistics in Agriculture.}  Manhattan, Kansas: Kansas State University, pp. 185-195.
 #' @references Peterson, K.  2002.  Six modifications of the aligned rank transform test for interaction. \emph{Journal of Modern Applied Statistical Methods} 1:100-109.
 #' @references Wobbrock, J.O., Findlater, L., Gergle, D., and Higgins, J.J.  2011. The aligned rank transform for nonparametric factorial analysis using only ANOVA procedures.  \emph{Proceedings of the ACM Conference on Human Factors in Computing Systems (CHI 2011).} Vancouver, British Columbia (May 7-12, 2011). New York: ACM Press, pp. 143-146.
 #' @examples
@@ -33,10 +33,6 @@ art <- function(
 	fun = function(x) mean(x, na.rm=T),
 	verbose = FALSE
 ) {
-
-	####################
-	## pre-processing ##
-	####################
 
 	# warnings/errors
 	if (length(factors) < 2) stop('Function \"art\" requires two or more factors to be specified.')
@@ -232,10 +228,6 @@ art <- function(
 		}
 
 	}
-
-	#####################
-	## post-processing ##
-	#####################
 
 	# remove utility fields
 	x$residualsTEMP <- x$cellLabelTEMP <- NULL

@@ -19,7 +19,11 @@
 #' sampleAcross(a, b)
 
 # combine two data frames, permute along one or more variables, and re-replit into input data frames with same number of original rows
-sampleAcross <- function(..., by=NULL, replace=FALSE) {
+sampleAcross <- compiler::cmpfun(function(
+	...,
+	by = NULL,
+	replace = FALSE
+) {
 
 	# input/output
 	input <- list(...)
@@ -89,4 +93,4 @@ sampleAcross <- function(..., by=NULL, replace=FALSE) {
 	
 	out
 
-}
+})

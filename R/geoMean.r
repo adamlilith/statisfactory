@@ -13,7 +13,11 @@
 #' geoMean(x)
 #' geoMean(x, prop0=TRUE)
 #' @export
-geoMean <- function(x, prop0 = FALSE, na.rm=TRUE) {
+geoMean <- compiler::cmpfun(function(
+	x,
+	prop0 = FALSE,
+	na.rm=TRUE
+) {
 	
 	if (na.rm) x <- na.omit(x)
 	out <- if (any(x < 0, na.rm = TRUE)){
@@ -26,4 +30,4 @@ geoMean <- function(x, prop0 = FALSE, na.rm=TRUE) {
 	
 	out
 	
-}
+})
