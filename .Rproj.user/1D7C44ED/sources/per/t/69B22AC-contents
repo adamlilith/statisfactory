@@ -1,0 +1,18 @@
+Package: statisfactory
+Type: Package
+Title: Statistical Tools
+Version: 0.1.0
+Author: Adam B. Smith <adam.smith@mobot.org>
+Maintainer: Adam B. Smith <adam.smith@mobot.org>
+Description: This package contains functions for implementing
+    statistical tests and help functions thereof.
+Depends:
+    omnibus
+Imports:
+Suggests:
+License: GPL (>=3)
+LazyData: false
+LazyLoad: yes
+URL: http://www.earthSkySea.org
+Encoding: UTF-8
+RoxygenNote: 6.1.0
