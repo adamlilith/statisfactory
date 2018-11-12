@@ -29,7 +29,7 @@
 #'
 #' @return A list of character elements representing formulae.
 
-.removeVerbotenVariables <- function(
+.removeVerbotenVariables <- compiler::cmpfun(function(
 	forms,
 	verboten
 ) {
@@ -68,4 +68,4 @@
 	
 	forms
 	
-}
+})

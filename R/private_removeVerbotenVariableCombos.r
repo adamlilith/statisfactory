@@ -38,7 +38,7 @@
 #' .removeVerbotenVariableCombos(forms, verbotenCombos)
 #' @return A list of character elements representing formulae.
 
-.removeVerbotenVariableCombos <- function(
+.removeVerbotenVariableCombos <- compiler::cmpfun(function(
 	forms,
 	verbotenCombos
 ) {
@@ -116,4 +116,4 @@
 
 	forms
 	
-}
+})

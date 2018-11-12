@@ -21,7 +21,7 @@
 #' x <- data.frame(x1=x1, x2=x2)
 #' hist2d(x)
 #' @export
-hist2d <- function(
+hist2d <- compiler::cmpfun(function(
 	x,
 	breaks1 = 'Sturges',
 	breaks2 = 'Sturges',
@@ -86,4 +86,4 @@ hist2d <- function(
 	attr(tallies, 'equidist2') <- hist2$equidist
 	tallies
 	
-}
+})
