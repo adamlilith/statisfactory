@@ -17,7 +17,7 @@
 #' mat <- matrix(c(seq(0, 1, by=0.1), seq(0.3, 1.3, by=0.1)), ncol=2)
 #' histOverlap(x, breaks=mat, graph=TRUE)
 #' @export
-histOverlap <- function(
+histOverlap <- compiler::cmpfun(function(
 	x,
 	breaks,
 	right=TRUE,
@@ -109,5 +109,4 @@ histOverlap <- function(
 	
 	breaks
 
-}
-
+})
