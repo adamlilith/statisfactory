@@ -42,7 +42,7 @@
 #'
 #' boxplot(cor ~ w, data=corFrame, xlab='w', ylab='correlation coefficient')
 #' @export
-sampleStrat <- function(
+sampleStrat <- compiler::cmpfun(function(
 	x,
 	col,
 	w = function(x) stats::sd(x, na.rm=T) / (max(x, na.rm=TRUE) - min(x, na.rm=TRUE)),
@@ -158,4 +158,4 @@ sampleStrat <- function(
 
 	x
 
-}
+})

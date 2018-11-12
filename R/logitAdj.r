@@ -16,7 +16,10 @@
 #' probitAdj(x, auto = TRUE)
 #' @export
 
-logitAdj <- function(x, epsilon = 0.01, base = 10) {
+logitAdj <- compiler::cmpfun(function(x,
+	epsilon = 0.01,
+	base = 10
+) {
 
 	if (is.null(epsilon)) epsilon <- min(x[x > 0], 1 - x[x < 1], na.rm=TRUE)
 	
@@ -25,4 +28,4 @@ logitAdj <- function(x, epsilon = 0.01, base = 10) {
 	attr(x, 'base') <- base
 	x
 	
-}
+})

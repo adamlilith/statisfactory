@@ -10,7 +10,11 @@
 #' rankMulti(x)
 #' rankMulti(x, c('x2', 'x1'))
 #' @export
-rankMulti <- function(x, cols=1:ncol(x), ...) {
+rankMulti <- compiler::cmpfun(function(
+	x,
+	cols=1:ncol(x),
+	...
+) {
 
 	# get ranks from first column
 	ranks <- rank(x[ , cols[1]], ...)
@@ -42,4 +46,4 @@ rankMulti <- function(x, cols=1:ncol(x), ...) {
 
 	ranks
 
-}
+})
