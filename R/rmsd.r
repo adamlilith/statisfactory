@@ -50,10 +50,16 @@ rmsd <- compiler::cmpfun(function(
 
 	if (is.null(w)) w <- rep(1, length(x1))
 	
+	nonNas <- omnibus::naOmitMulti(x1, x2, w)
+	
+	x1 <- nonNas[[1]]
+	x2 <- nonNas[[2]]
+	w <- nonNas[[3]]
+	
 	totalWeight <- sum(w)
 	
 	out <- if (length(x1) > 0 & length(x2) > 0) {
-		sqrt(sum(w * (x1 - x2)^2, na.rm=na.rm) / totalWeight)
+		sqrt(sum(w * (x1 - x2)^2) / totalWeight)
 	} else {
 		NA
 	}
