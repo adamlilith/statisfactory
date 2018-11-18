@@ -11,7 +11,7 @@ rmsd(x1, x2, w = NULL, na.rm = FALSE)
 
 \item{x2}{Numeric vector the same length as \code{x1}, or a matrix or data frame the same dimensions as \code{x1}.}
 
-\item{w}{Weights. If \code{x1} and \code{x2} are vectors, this is a numeric vector the same length as \code{x1} or \code{x2}. If \code{x1} and \code{x2} are matrices or data frames then this is either a matrix or data frame with the same dimensions as \code{x1} and \code{x2}. The default value of \code{NULL} assigns each pair of values in \code{x1} and \code{x2} equal weight.}
+\item{w}{Weights or a function defining weights. If \code{x1} and \code{x2} are vectors, this can be a numeric vector the same length as \code{x1} or \code{x2}. If \code{x1} and \code{x2} are matrices or data frames then this can be either a matrix or data frame with the same dimensions as \code{x1} and \code{x2}. Alternatively, this can be a function to define weights. The function will be applied to each value of \code{(x1 - x2)^2}. The default value of \code{NULL} assigns each pair of values in \code{x1} and \code{x2} equal weight.}
 
 \item{na.rm}{Logical, if \code{TRUE} then remove any elements in \code{x1} \emph{and} \code{x2} where either \code{x1} or \code{x2} is \code{NA}. Default is \code{FALSE}, in which case any \code{NA} returns \code{NA}.}
 }
@@ -19,7 +19,7 @@ rmsd(x1, x2, w = NULL, na.rm = FALSE)
 Numeric.
 }
 \description{
-Calculate the root-mean-square deviation (\code{sqrt(mean((x1 - x2)^2))}). If non-constant weights \code{w} are supplied, then the calculation is \code{sqrt(sum(w * (x1 - x2)^2) / sum(w))}.
+Calculate the root-mean-square deviation (\code{sqrt(mean((x1 - x2)^2))}). If non-constant weights \code{w} are supplied, then the calculation is \code{sqrt(sum(w * (x1 - x2)^2) / sum(w))}. Alternatively, \code{w} can be a function, in which case the returned value is equal to \code{sqrt(mean(w((x1 - x2)^2)))}.
 }
 \examples{
 set.seed(123)
@@ -32,10 +32,24 @@ rmsd(x1, x2)
 rmsd(x1, x2, na.rm=TRUE)
 
 # matrices
-x1 <- matrix(runif(20), ncol=5)
-x2 <- matrix(rnorm(20), ncol=5)
+x1 <- matrix(1:20, ncol=5)
+x2 <- matrix(1:20 + rnorm(20), ncol=5)
 rmsd(x1, x2)
 x1[1, 1] <- NA
 rmsd(x1, x2)
 rmsd(x1, x2, na.rm=TRUE)
+
+# weights as values
+x1 <- matrix(1:20, ncol=5)
+x2 <- matrix(1:20 + rnorm(20, 0, 2), ncol=5)
+w <- matrix(1:20, ncol=5)
+rmsd(x1, x2)
+rmsd(x1, x2, w)
+
+# weights as a function
+x1 <- matrix(1:20, ncol=5)
+x2 <- matrix(20:1, ncol=5)
+w <- function(x) 1 - exp(-x)
+rmsd(x1, x2)
+rmsd(x1, x2, w)
 }
