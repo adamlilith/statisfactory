@@ -51,3 +51,4 @@ verbotenCombos <- list(list('x1', 'x2', FALSE, FALSE))
 verbotenCombos <- list(list('x1:x3', 'x2', TRUE, TRUE))
 .removeVerbotenVariableCombos(forms, verbotenCombos)
 }
+\keyword{internal}

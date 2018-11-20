@@ -28,6 +28,7 @@
 #' .removeVerbotenVariables(forms, verboten)
 #'
 #' @return A list of character elements representing formulae.
+#' @keywords internal
 
 .removeVerbotenVariables <- compiler::cmpfun(function(
 	forms,
