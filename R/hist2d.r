@@ -10,7 +10,6 @@
 #' \item Character: The name of a function to compute the number of cells (see the \emph{Details} section in \code{\link[graphics]{hist}}). Used as a suggestion only (see \code{\link[graphics]{hist}}).
 #' }
 #' @param breaks2 Same as \code{breaks1} but for the second variable.
-#' @param freq Logical, if \code{TRUE} (default) then values in the output represent counts. If \code{FALSE} then they represent relative densities.
 #' @param right Logical, if \code{TRUE} (default) then use left-open and right-closed intervals.
 #' @param ... Arguments to pass to \code{\link[graphics]{hist}}.
 #' @return Object of class \code{matrix} and \code{histogram2d}. Columns pertain to bins of \code{x1} and rows {x2}. Column names and row names are mid-points of bins.
@@ -25,7 +24,6 @@ hist2d <- compiler::cmpfun(function(
 	x,
 	breaks1 = 'Sturges',
 	breaks2 = 'Sturges',
-	freq = TRUE,
 	right = TRUE,
 	...
 ) {
@@ -33,18 +31,17 @@ hist2d <- compiler::cmpfun(function(
 	if (!(class(x) %in% c('matrix', 'data.frame'))) stop('Argument "x" in function "hist2d" (statisfactory package) must be a matrix or data frame.')
 	if (!(class(breaks1) %in% c('character', 'function', 'numeric', 'integer'))) stop('Argument "breaks1" in function "hist2d" (statisfactory package) must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
 	if (!(class(breaks2) %in% c('character', 'function', 'numeric', 'integer'))) stop('Argument "breaks2" in function "hist2d" (statisfactory package) must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
-	if (!is.logical(freq)) stop('Argument "freq" in function "hist2d" (statisfactory package) must be "TRUE" or "FALSE".')
 	if (!is.logical(right)) stop('Argument "right" in function "hist2d" (statisfactory package) must be "TRUE" or "FALSE".')
 
 	x1 <- x[ , 1]
 	x2 <- x[ , 2]
 	
 	# create breaks for bins for each variable using all available data
-	hist1 <- hist(x=x1, breaks=breaks1, plot=FALSE, ...)
+	hist1 <- hist(x=x1, breaks=breaks1, freq=TRUE, plot=FALSE, right=right, ...)
 	breaks1 <- hist1$breaks
 	mids1 <- hist1$mids
 	
-	hist2 <- hist(x=x2, breaks=breaks2, plot=FALSE, ...)
+	hist2 <- hist(x=x2, breaks=breaks2, freq=TRUE, plot=FALSE, right=right, ...)
 	breaks2 <- hist2$breaks
 	mids2 <- hist2$mids
 	
@@ -69,14 +66,12 @@ hist2d <- compiler::cmpfun(function(
 		if (length(inThisBreak1) > 0) {
 		
 			x2InThisX1 <- x2[inThisBreak1]
-			thisHist2 <- hist(x2InThisX1, breaks=breaks2, freq=NULL, plot=FALSE, ...)
+			thisHist2 <- hist(x2InThisX1, breaks=breaks2, freq=TRUE, plot=FALSE, right=right, ...)
 			tallies[ , count1] <- thisHist2$counts
 			
 		}
 		
 	}
-	
-	if (!freq) tallies <- tallies / sum(tallies)
 	
 	class(tallies) <- c('matrix', 'histogram2d')
 	attr(tallies, 'breaks1') <- breaks1
