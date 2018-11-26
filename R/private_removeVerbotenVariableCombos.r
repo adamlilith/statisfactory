@@ -37,6 +37,7 @@
 #' verbotenCombos <- list(list('x1:x3', 'x2', TRUE, TRUE))
 #' .removeVerbotenVariableCombos(forms, verbotenCombos)
 #' @return A list of character elements representing formulae.
+#' @keywords internal
 
 .removeVerbotenVariableCombos <- compiler::cmpfun(function(
 	forms,

@@ -15,3 +15,4 @@ List.
 \description{
 This function takes as an argument a list of character vectors. Each set of character vectors represents terms in a formula, and each element of a specific term in that formula. It returns a possibly shortened list with vectors culled.
 }
+\keyword{internal}
