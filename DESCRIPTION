@@ -1,7 +1,8 @@
 Package: statisfactory
 Type: Package
 Title: Statistical Tools
-Version: 0.1.5
+Version: 0.1.6
+Date: 2018-11-26
 Author: Adam B. Smith <adam.smith@mobot.org>
 Maintainer: Adam B. Smith <adam.smith@mobot.org>
 Description: This package contains functions for implementing

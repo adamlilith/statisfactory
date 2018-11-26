@@ -4,8 +4,8 @@
 \alias{hist2d}
 \title{Two-dimensional histogram}
 \usage{
-hist2d(x, breaks1 = "Sturges", breaks2 = "Sturges", freq = TRUE,
-  right = TRUE, ...)
+hist2d(x, breaks1 = "Sturges", breaks2 = "Sturges", right = TRUE,
+  ...)
 }
 \arguments{
 \item{x}{Data frame or matrix with at least two columns. Only frequencies in the first two columns are used.}
@@ -20,8 +20,6 @@ hist2d(x, breaks1 = "Sturges", breaks2 = "Sturges", freq = TRUE,
 }}
 
 \item{breaks2}{Same as \code{breaks1} but for the second variable.}
-
-\item{freq}{Logical, if \code{TRUE} (default) then values in the output represent counts. If \code{FALSE} then they represent relative densities.}
 
 \item{right}{Logical, if \code{TRUE} (default) then use left-open and right-closed intervals.}
 
