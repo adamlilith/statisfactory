@@ -1,7 +1,7 @@
 #' Count number of values in overlapping bins
 #'
 #' @param x Numeric values.
-#' @param breaks One integer, three numeric values, or a matrix with at least two columns:
+#' @param breaks One integer, three numeric values, or a matrix or data frame with at least two columns:
 #' \itemize{
 #' \item Single integer: The number of overlapping bins into which to enumerate values of \code{x}. The range of \code{x} covered by the bins bins will extend from the least value minus 2.5 percent of the range to the largest value plus 2.5 percent of the range.
 #' \item Three numeric values: The first two values are the range of covered by the bins (least and greatest). The third value is the number of bins.
@@ -24,7 +24,12 @@ histOverlap <- compiler::cmpfun(function(
 	graph=TRUE
 ) {
 
-	if (class(breaks) != 'matrix') {
+	# process bin breaks
+	if (class(breaks) == 'data.frame') {
+		
+		breaks <- as.matrix(breaks)
+		
+	} else if (class(breaks) != 'matrix') {
 	
 		# calculate breaks based on number of bins
 		if (length(breaks) == 1) {
@@ -47,9 +52,11 @@ histOverlap <- compiler::cmpfun(function(
 
 		} else {
 		
-			stop('Argument "breaks" must be either a single integer, three values, or a matrix.')
+			stop('Argument "breaks" must be either a single integer, three values, or a data frame or matrix.')
 			
 		}
+		
+	}
 		
 		halfBinWidth <- (largest - smallest) / (bins + 1)
 		
