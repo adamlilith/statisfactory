@@ -9,11 +9,11 @@ histOverlap(x, breaks, right = TRUE, graph = TRUE)
 \arguments{
 \item{x}{Numeric values.}
 
-\item{breaks}{One integer, three numeric values, or a matrix with at least two columns:
+\item{breaks}{One integer, three numeric values, or a matrix or data frame with at least two columns:
 \itemize{
 \item Single integer: The number of overlapping bins into which to enumerate values of \code{x}. The range of \code{x} covered by the bins bins will extend from the least value minus 2.5 percent of the range to the largest value plus 2.5 percent of the range.
 \item Three numeric values: The first two values are the range of covered by the bins (least and greatest). The third value is the number of bins.
-\item Matrix with at least two columns. Each row corresponds to a different bin.  The first column represents the minimum values of each bin and the second column the maximum value. Subsequent columns are ignored. Note that by using this option arbitrary bins can be used--they need not overlap or even be continuous in coverage.
+\item Matrix or data frame with at least two columns. Each row corresponds to a different bin.  The first column represents the minimum values of each bin and the second column the maximum value. Subsequent columns are ignored. Note that by using this option arbitrary bins can be used--they need not overlap or even be continuous in coverage.
 }}
 
 \item{right}{Logical, if \code{TRUE} (default) then use left-open and right-closed intervals.}
