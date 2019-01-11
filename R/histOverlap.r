@@ -5,7 +5,7 @@
 #' \itemize{
 #' \item Single integer: The number of overlapping bins into which to enumerate values of \code{x}. The range of \code{x} covered by the bins bins will extend from the least value minus 2.5 percent of the range to the largest value plus 2.5 percent of the range.
 #' \item Three numeric values: The first two values are the range of covered by the bins (least and greatest). The third value is the number of bins.
-#' \item Matrix with at least two columns. Each row corresponds to a different bin.  The first column represents the minimum values of each bin and the second column the maximum value. Subsequent columns are ignored. Note that by using this option arbitrary bins can be used--they need not overlap or even be continuous in coverage.
+#' \item Matrix or data frame with at least two columns. Each row corresponds to a different bin.  The first column represents the minimum values of each bin and the second column the maximum value. Subsequent columns are ignored. Note that by using this option arbitrary bins can be used--they need not overlap or even be continuous in coverage.
 #' }
 #' @param right Logical, if \code{TRUE} (default) then use left-open and right-closed intervals.
 #' @param graph Logical, if \code{TRUE} then plot frequencies.
@@ -55,8 +55,6 @@ histOverlap <- compiler::cmpfun(function(
 			stop('Argument "breaks" must be either a single integer, three values, or a data frame or matrix.')
 			
 		}
-		
-	}
 		
 		halfBinWidth <- (largest - smallest) / (bins + 1)
 		
