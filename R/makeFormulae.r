@@ -84,7 +84,7 @@ makeFormulae <- function(
 			### all quadratic models with just linear terms that appear also as quadratic terms
 			###################################################################################
 			
-				if (verbose) say('Making formulae with just linear terms that appear also as quadratic terms...')
+				if (verbose) omnibus::say('Making formulae with just linear terms that appear also as quadratic terms...')
 				
 				for (countTerms in 1:stopAt) {
 
@@ -157,7 +157,7 @@ makeFormulae <- function(
 			iaModels <- list()
 
 			# all models with 2-way interactions where linear terms also appear in interaction terms
-			if (verbose) say('Making formulae with two-way interaction and appropriate linear terms...')
+			if (verbose) omnibus::say('Making formulae with two-way interaction and appropriate linear terms...')
 			
 			for (countTerms in 2:stopAt) {
 			
@@ -245,7 +245,7 @@ makeFormulae <- function(
 			iaQuadModels <- list()
 
 			# add quadratic and interaction models
-			if (verbose) say('Making formulae with all possible two-way interaction, quadratic, and appropriate linear terms...')
+			if (verbose) omnibus::say('Making formulae with all possible two-way interaction, quadratic, and appropriate linear terms...')
 			
 			for (countQuad in seq_along(quadModels)) {
 
@@ -279,7 +279,7 @@ makeFormulae <- function(
 			### add linear terms that may not be in combined quad and interaction models
 			############################################################################
 			
-			if (verbose) say('Making formulae with all possible two-way interaction, quadratic, and appropriate linear terms plus linear terms not already in formula...')
+			if (verbose) omnibus::say('Making formulae with all possible two-way interaction, quadratic, and appropriate linear terms plus linear terms not already in formula...')
 
 			# if there are still any IA quadratic models
 			if (length(iaQuadModels) > 0) {

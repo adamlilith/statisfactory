@@ -56,7 +56,7 @@ art <- function(
 	for (count in 2:length(factors)) x$cellLabelTEMP <- paste(x$cellLabelTEMP, x[ , factors[count]])
 
 	# calculate residuals using JUST factors to define cells
-	if (verbose) say('Calculating cell residuals...')
+	if (verbose) omnibus::say('Calculating cell residuals...')
 	cellCenter <- stats::aggregate(x[ , response], list(x$cellLabelTEMP), FUN=fun) # cell means
 	x$residualsTEMP <- x[ , response] - cellCenter[match(x$cellLabelTEMP, cellCenter$Group.1), 2]
 
@@ -66,7 +66,7 @@ art <- function(
 	## align MAIN factors
 	for (thisFactor in factors) {
 
-		if (verbose) say('Aligning factor ', thisFactor, '...')
+		if (verbose) omnibus::say('Aligning factor ', thisFactor, '...')
 
 		x$TEMP <- NA
 
@@ -85,7 +85,7 @@ art <- function(
 
 		for (thisFactorTWO in factors[(which(thisFactorONE==factors) + 1):length(factors)]) {
 
-			if (verbose) say('Aligning factors ', thisFactorONE, ' and ', thisFactorTWO, '...')
+			if (verbose) omnibus::say('Aligning factors ', thisFactorONE, ' and ', thisFactorTWO, '...')
 
 			x$TEMP <- NA
 
@@ -121,7 +121,7 @@ art <- function(
 
 				for (thisFactorTHREE in factors[(which(thisFactorTWO==factors) + 1):length(factors)]) {
 
-					if (verbose) say('Aligning factors ', thisFactorONE, ', ', thisFactorTWO, ', and ', thisFactorTHREE, '...')
+					if (verbose) omnibus::say('Aligning factors ', thisFactorONE, ', ', thisFactorTWO, ', and ', thisFactorTHREE, '...')
 
 					x$TEMP <- NA
 
@@ -171,7 +171,7 @@ art <- function(
 
 					for (thisFactorFOUR in factors[(which(thisFactorTHREE==factors) + 1):length(factors)]) {
 
-					if (verbose) say('Aligning factors ', thisFactorONE, ', ', thisFactorTWO, ', ', thisFactorTHREE, ', and ', thisFactorFOUR, '...')
+					if (verbose) omnibus::say('Aligning factors ', thisFactorONE, ', ', thisFactorTWO, ', ', thisFactorTHREE, ', and ', thisFactorFOUR, '...')
 
 						x$TEMP <- NA
 

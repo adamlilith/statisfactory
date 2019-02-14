@@ -1,7 +1,13 @@
 # statisfactory
 
-This package contains various statistical tools and helper functions. They include:
+This package contains various statistical tools and helper functions. You can install this package in R using these commands:
 
+`install.packages('devtools') # if you haven't done this already`  
+`library(devtools)`  
+`devtools::install_github('adamlilith/omnibus')`  
+`devtools::install_github('adamlilith/statisfactory')`  
+
+## Functions ##
 * `art`: Aligned rank transform for using ANOVAs on rank data
 * `geoMean`: Geometric mean
 * `hist2d`: Two-dimensional histogram
@@ -14,3 +20,5 @@ This package contains various statistical tools and helper functions. They inclu
 * `sampleAcross`: Permute values across two vectors or columns in two data frames or matrices
 * `sampleStrat`: Sample values stratified by one or more other variables
 * `se`: Standard error of the mean
+
+Adam B. Smith
