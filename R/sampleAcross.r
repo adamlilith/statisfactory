@@ -5,7 +5,7 @@
 #' @param replace Logical. If \code{TRUE} then sample with replacement. If \code{FALSE} (default) then sample without replacement.
 #' @param by Character list or list of integers. Names of columns or column numbers to permute (only used if \code{...} is data frames or matrices). If left as \code{NULL} (default) the all columns are permuted.
 #' @return A list object with same number of elements as in \code{...} with the original dimensions. The order is the same as in \code{...} (e.g., so if the call is like \code{sampleAcross(a, b, c)} then the output will be a list with permuted versions of \code{a}, \code{b}, and \code{c} in that order).
-#' @seealso [base::sample()]
+#' @seealso \code{\link{sample}}
 #' @examples
 #' x1 <- 1:5
 #' x2 <- 6:10
@@ -17,6 +17,7 @@
 #' b <- data.frame(x=11:20, y=letters[11:20])
 #' sampleAcross(a, b, by='y')
 #' sampleAcross(a, b)
+#' @export
 
 # combine two data frames, permute along one or more variables, and re-replit into input data frames with same number of original rows
 sampleAcross <- compiler::cmpfun(function(

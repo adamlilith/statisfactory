@@ -32,5 +32,5 @@ sampleAcross(a, b, by='y')
 sampleAcross(a, b)
 }
 \seealso{
-[base::sample()]
+\code{\link{sample}}
 }

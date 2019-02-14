@@ -4,8 +4,8 @@ This package contains various statistical tools and helper functions. You can in
 
 `install.packages('devtools') # if you haven't done this already`  
 `library(devtools)`  
-`install_github('adamlilith/omnibus')`  
-`install_github('adamlilith/statisfactory')`  
+`devtools::install_github('adamlilith/omnibus')`  
+`devtools::install_github('adamlilith/statisfactory')`  
 
 ## Functions ##
 * `art`: Aligned rank transform for using ANOVAs on rank data
