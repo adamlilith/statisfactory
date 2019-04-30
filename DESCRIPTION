@@ -11,7 +11,7 @@ Depends:
     omnibus
 Imports:
 Suggests:
-License: GPL (>=3)
+License: GPL (>=3) + file LICENSE
 LazyData: false
 LazyLoad: yes
 URL: http://www.earthSkySea.org

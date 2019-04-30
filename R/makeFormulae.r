@@ -152,9 +152,9 @@ makeFormulae <- function(
 	### models with 2-ways interactions
 	###################################
 		
-		if (ia & length(preds) > 1) {
+		iaModels <- list()
 
-			iaModels <- list()
+		if (ia & length(preds) > 1) {
 
 			# all models with 2-way interactions where linear terms also appear in interaction terms
 			if (verbose) omnibus::say('Making formulae with two-way interaction and appropriate linear terms...')
@@ -239,8 +239,8 @@ makeFormulae <- function(
 
 	### models with quadratic and interaction terms
 	###############################################
-		
-		if (quad & ia && length(iaModels) > 0) {
+
+		if (quad & ia & length(iaModels) > 0) {
 
 			iaQuadModels <- list()
 
@@ -305,7 +305,7 @@ makeFormulae <- function(
 				for (count in seq_along(iaQuadModels)) models[[length(models) + 1]] <- iaQuadModels[[count]]
 				
 			}
-
+			
 		}
 
 	### remove models below a desired order
