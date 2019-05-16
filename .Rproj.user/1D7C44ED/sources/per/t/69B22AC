@@ -5,16 +5,19 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "463525950",
+    "hash" : "3218524683",
     "id" : "69B22AC",
-    "lastKnownWriteTime" : 1556639343,
-    "last_content_update" : 1556639343257,
+    "lastKnownWriteTime" : 1557972883,
+    "last_content_update" : 1557972883891,
     "path" : "C:/Ecology/Drive/R/statisfactory/DESCRIPTION",
     "project_path" : "DESCRIPTION",
     "properties" : {
-        "cursorPosition" : "9,8",
+        "cursorPosition" : "4,16",
         "scrollLine" : "0"
     },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
     "relative_order" : 1,
     "source_on_save" : false,
     "source_window" : "",
