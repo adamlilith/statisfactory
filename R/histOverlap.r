@@ -7,8 +7,10 @@
 #' \item Three numeric values: The first two values are the range of covered by the bins (least and greatest). The third value is the number of bins.
 #' \item Matrix or data frame with at least two columns. Each row corresponds to a different bin.  The first column represents the minimum values of each bin and the second column the maximum value. Subsequent columns are ignored. Note that by using this option arbitrary bins can be used--they need not overlap or even be continuous in coverage.
 #' }
-#' @param right Logical, if \code{TRUE} (default) then use left-open and right-closed intervals.
-#' @param graph Logical, if \code{TRUE} then plot frequencies.
+#' @param right Logical, if \code{TRUE} (default), then use left-open and right-closed intervals.
+#' @param graph Logical, if \code{TRUE} (default), then plot frequencies.
+#' @param indices Logical, if \code{TRUE}, then the output will have an attribute which is a list item with one element per bin in the output, with the indices of \code{x} that fall in each bin. Default is \code{FALSE}.
+#' @return Matrix
 #' @seealso \code{\link[graphics]{hist}}
 #' @examples
 #' x <- runif(10000)
@@ -16,12 +18,14 @@
 #' histOverlap(x, breaks=c(0, 1, 10), graph=TRUE)
 #' mat <- matrix(c(seq(0, 1, by=0.1), seq(0.3, 1.3, by=0.1)), ncol=2)
 #' histOverlap(x, breaks=mat, graph=TRUE)
+#' histOverlap(x, breaks=mat, indices=TRUE)
 #' @export
 histOverlap <- compiler::cmpfun(function(
 	x,
 	breaks,
-	right=TRUE,
-	graph=TRUE
+	right = TRUE,
+	graph = TRUE,
+	indices = FALSE
 ) {
 
 	# process bin breaks
@@ -66,6 +70,10 @@ histOverlap <- compiler::cmpfun(function(
 		
 		colnames(breaks) <- c('lower', 'upper')
 
+		mids <- matrix(rowMeans(breaks), ncol=1)
+		colnames(mids) <- 'middle'
+		breaks <- cbind(breaks[ , 'lower', drop=FALSE], mids, breaks[ , 'upper', drop=FALSE])
+	
 	}
 
 	breaks <- cbind(breaks, matrix(NA, ncol=2, nrow=nrow(breaks)))
@@ -76,16 +84,22 @@ histOverlap <- compiler::cmpfun(function(
 	
 	nas <- sum(is.na(x))
 	attr(breaks, 'NAs_in_x') <- nas
+
+	# to store indices of cases in each bin
+	if (indices) indicesInBin <- list()
 	
 	# enumerate number in bins
 	for (i in 1:nrow(breaks)) {
-	
-		breaks[i, 'count'] <- if (right) {
-			sum(x > breaks[i, 1] & x <= breaks[i, 2], na.rm=TRUE)
+
+		these <- if (right) {
+			which(x > breaks[i, 'lower'] & x <= breaks[i, 'upper'])
 		} else {
-			sum(x >= breaks[i, 1] & x < breaks[i, 2], na.rm=TRUE)
+			which(x >= breaks[i, 'lower'] & x < breaks[i, 'upper'])
 		}
 		
+		breaks[i, 'count'] <- length(x[these])
+		if (indices) indicesInBin[[i]] <- these
+
 	}
 	
 	breaks[ , 'proportion'] <- breaks[ , 'count'] / sum(breaks[ , 'count'])
@@ -93,7 +107,7 @@ histOverlap <- compiler::cmpfun(function(
 	# plot
 	if (graph) {
 	
-		xlim <- range(pretty(c(min(breaks[ , 1], na.rm=TRUE), max(breaks[ , 2], na.rm=TRUE))))
+		xlim <- range(pretty(c(min(breaks[ , 'lower'], na.rm=TRUE), max(breaks[ , 'upper'], na.rm=TRUE))))
 		ylim <- range(pretty(c(0, breaks[ , 'proportion'])))
 		mids <- apply(breaks[ , 1:2], 1, mean)
 		
@@ -106,12 +120,13 @@ histOverlap <- compiler::cmpfun(function(
 		
 		for (i in 1:nrow(breaks)) {
 			
-			graphics::polygon(c(breaks[i, 1], breaks[i, 2], breaks[i, 2], breaks[i, 1]), c(0, 0, breaks[i, 'proportion'], breaks[i, 'proportion']), col=scales::alpha(cols[i], 0.3))
+			graphics::polygon(c(breaks[i, 'lower'], breaks[i, 'upper'], breaks[i, 'upper'], breaks[i, 'lower']), c(0, 0, breaks[i, 'proportion'], breaks[i, 'proportion']), col=scales::alpha(cols[i], 0.3))
 			
 		}
 		
 	}
 	
+	if (indices) attr(breaks, 'indices') <- indicesInBin
 	breaks
 
 })

@@ -4,7 +4,7 @@
 \alias{histOverlap}
 \title{Count number of values in overlapping bins}
 \usage{
-histOverlap(x, breaks, right = TRUE, graph = TRUE)
+histOverlap(x, breaks, right = TRUE, graph = TRUE, indices = FALSE)
 }
 \arguments{
 \item{x}{Numeric values.}
@@ -16,9 +16,14 @@ histOverlap(x, breaks, right = TRUE, graph = TRUE)
 \item Matrix or data frame with at least two columns. Each row corresponds to a different bin.  The first column represents the minimum values of each bin and the second column the maximum value. Subsequent columns are ignored. Note that by using this option arbitrary bins can be used--they need not overlap or even be continuous in coverage.
 }}
 
-\item{right}{Logical, if \code{TRUE} (default) then use left-open and right-closed intervals.}
+\item{right}{Logical, if \code{TRUE} (default), then use left-open and right-closed intervals.}
 
-\item{graph}{Logical, if \code{TRUE} then plot frequencies.}
+\item{graph}{Logical, if \code{TRUE} (default), then plot frequencies.}
+
+\item{indices}{Logical, if \code{TRUE}, then the output will have an attribute which is a list item with one element per bin in the output, with the indices of \code{x} that fall in each bin. Default is \code{FALSE}.}
+}
+\value{
+Matrix
 }
 \description{
 Count number of values in overlapping bins
@@ -29,6 +34,7 @@ histOverlap(x, breaks=10, graph=TRUE)
 histOverlap(x, breaks=c(0, 1, 10), graph=TRUE)
 mat <- matrix(c(seq(0, 1, by=0.1), seq(0.3, 1.3, by=0.1)), ncol=2)
 histOverlap(x, breaks=mat, graph=TRUE)
+histOverlap(x, breaks=mat, indices=TRUE)
 }
 \seealso{
 \code{\link[graphics]{hist}}
