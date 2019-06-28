@@ -3,9 +3,9 @@
 #' @param x Numeric values.
 #' @param breaks One integer, three numeric values, or a matrix or data frame with at least two columns:
 #' \itemize{
-#' \item Single integer: The number of overlapping bins into which to enumerate values of \code{x}. The range of \code{x} covered by the bins bins will extend from the least value minus 2.5 percent of the range to the largest value plus 2.5 percent of the range.
-#' \item Three numeric values: The first two values are the range of covered by the bins (least and greatest). The third value is the number of bins.
-#' \item Matrix or data frame with at least two columns. Each row corresponds to a different bin.  The first column represents the minimum values of each bin and the second column the maximum value. Subsequent columns are ignored. Note that by using this option arbitrary bins can be used--they need not overlap or even be continuous in coverage.
+#' 		\item Single integer: The number of overlapping bins into which to enumerate values of \code{x}. The range of \code{x} covered by the bins bins will extend from the least value minus 2.5 percent of the range to the largest value plus 2.5 percent of the range.
+#' 		\item Three numeric values: The first two values are the range of covered by the bins (least and greatest). The third value is the number of bins.
+#' 		\item Matrix or data frame with at least two columns. Each row corresponds to a different bin.  The first column represents the minimum values of each bin and the second column the maximum value. Subsequent columns are ignored. Note that by using this option arbitrary bins can be used--they need not overlap or even be continuous in coverage.
 #' }
 #' @param right Logical, if \code{TRUE} (default), then use left-open and right-closed intervals.
 #' @param graph Logical, if \code{TRUE} (default), then plot frequencies.
@@ -31,7 +31,11 @@ histOverlap <- compiler::cmpfun(function(
 	# process bin breaks
 	if (class(breaks) == 'data.frame') {
 		
-		breaks <- as.matrix(breaks)
+		breaks <- as.matrix(breaks[ , 1:2])
+		
+	} else if (class(breaks) == 'matrix') {
+	
+		breaks <- breaks[ , 1:2]
 		
 	} else if (class(breaks) != 'matrix') {
 	
@@ -68,27 +72,27 @@ histOverlap <- compiler::cmpfun(function(
 			ncol=2, byrow=FALSE
 		)
 		
-		colnames(breaks) <- c('lower', 'upper')
-
-		mids <- matrix(rowMeans(breaks), ncol=1)
-		colnames(mids) <- 'middle'
-		breaks <- cbind(breaks[ , 'lower', drop=FALSE], mids, breaks[ , 'upper', drop=FALSE])
-	
 	}
 
+	# clean up
+	colnames(breaks) <- c('lower', 'upper')
+	mids <- matrix(rowMeans(breaks), ncol=1)
+	colnames(mids) <- 'middle'
+	breaks <- cbind(breaks[ , 'lower', drop=FALSE], mids, breaks[ , 'upper', drop=FALSE])
+	
 	breaks <- cbind(breaks, matrix(NA, ncol=2, nrow=nrow(breaks)))
 	colnames(breaks)[(ncol(breaks) - 1):ncol(breaks)] <- c('count', 'proportion')
 
-	# enumerate total samples
+	# total samples
 	total <- sum(!is.na(x))
 	
 	nas <- sum(is.na(x))
 	attr(breaks, 'NAs_in_x') <- nas
 
-	# to store indices of cases in each bin
+	# indices of cases in each bin
 	if (indices) indicesInBin <- list()
 	
-	# enumerate number in bins
+	# number in bins
 	for (i in 1:nrow(breaks)) {
 
 		these <- if (right) {
@@ -109,14 +113,14 @@ histOverlap <- compiler::cmpfun(function(
 	
 		xlim <- range(pretty(c(min(breaks[ , 'lower'], na.rm=TRUE), max(breaks[ , 'upper'], na.rm=TRUE))))
 		ylim <- range(pretty(c(0, breaks[ , 'proportion'])))
-		mids <- apply(breaks[ , 1:2], 1, mean)
+		mids <- breaks[ , 'middle']
 		
-		plot(0, type='n', xaxt='n', yaxt='n', xlim=xlim, ylim=ylim, ylab='Proportion', xlab='Bin Midpoint')
+		plot(0, type='n', xaxt='n', yaxt='n', xlim=xlim, ylim=ylim, ylab='Proportion', xlab='Bin Midpoint', ...)
 
-		axis(1, xlim=xlim, ylim=ylim, at=mids, labels=mids, las=3)
-		axis(2, xlim=xlim, ylim=ylim, at=pretty(c(0, breaks[ , 'proportion'])))
+		axis(1, xlim=xlim, ylim=ylim, at=mids, labels=mids, las=3, ...)
+		axis(2, xlim=xlim, ylim=ylim, at=pretty(c(0, breaks[ , 'proportion'])), ...)
 
-		cols <- rep(c('red', 'blue', 'green'), length.out=nrow(breaks))
+		cols <- rep(c('red', 'green', 'orange', 'blue', 'yellow', 'gray'), length.out=nrow(breaks))
 		
 		for (i in 1:nrow(breaks)) {
 			
