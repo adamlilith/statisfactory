@@ -1,15 +1,16 @@
 Package: statisfactory
 Type: Package
 Title: Statistical Tools
-Version: 0.2.0
-Date: 2019-05-15
+Version: 0.2.3
+Date: 2019-06-27
 Author: Adam B. Smith <adam.smith@mobot.org>
 Maintainer: Adam B. Smith <adam.smith@mobot.org>
 Description: This package contains functions for implementing
     statistical tests and help functions thereof.
+Remotes:
+	adamlilith/omnibus,
 Depends:
 Imports:
-    omnibus
 Suggests:
 License: GPL (>=3) + file LICENSE
 LazyData: false
