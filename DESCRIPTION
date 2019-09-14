@@ -1,8 +1,8 @@
 Package: statisfactory
 Type: Package
 Title: Statistical Tools
-Version: 0.3.0
-Date: 2019-08-02
+Version: 0.3.2
+Date: 2019-09-13
 Author: Adam B. Smith <adam.smith@mobot.org>
 Maintainer: Adam B. Smith <adam.smith@mobot.org>
 Description: This package contains functions for implementing
@@ -11,6 +11,7 @@ Remotes:
 	adamlilith/omnibus,
 Depends:
 Imports:
+	rlist
 Suggests:
 License: GPL (>=3) + file LICENSE
 LazyData: false

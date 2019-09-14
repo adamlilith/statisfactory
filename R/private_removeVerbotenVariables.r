@@ -38,8 +38,8 @@
 	# ensure each variant of an interaction term is represented
 	for (i in seq_along(verboten)) {
 		if (grepl(verboten[i], pattern=':')) {
-			
-			splitTerm <- strsplit(verboten[i], split=':')[[1]]
+
+			splitTerms <- strsplit(verboten[i], split=':')[[1]]
 			swappedTerms <- if (length(splitTerms) == 2) {
 				paste0(splitTerms[2], ':', splitTerms[1])
 			} else if (length(splitTerms) == 3) {
@@ -51,22 +51,25 @@
 					paste0(splitTerms[3], ':', splitTerms[2], ':', splitTerms[1])
 				)
 			}
-			
+
 			verboten <- c(verboten, swappedTerms)
-			
+
 		}
-		
+
 	}
-	
+
 	verboten <- unique(verboten)
-	
+
 	# remove formulae with undesired term(s)
+	removeThese <- numeric()
 	for (countModel in seq_along(forms)) {
 
-		if (any(forms[[countModel]] %in% verboten)) forms[[countModel]] <- NULL
-		
+		if (any(forms[[countModel]] %in% verboten)) removeThese <- c(removeThese, countModel)
+
 	}
 	
+	if (length(removeThese) > 0) forms <- rlist::list.remove(forms, removeThese)
+
 	forms
-	
+
 })

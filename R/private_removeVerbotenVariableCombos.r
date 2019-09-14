@@ -44,6 +44,9 @@
 	verbotenCombos
 ) {
 
+	# stores indices of models to be removed
+	removeThese <- numeric()
+
 	for (countModel in seq_along(forms)) {
 
 		for (countVerboten in seq_along(verbotenCombos)) {
@@ -77,44 +80,31 @@
 			# want exact matches for both terms
 			if (exactMatch1 & exactMatch2) {
 								
-				if (exactTerm1 & exactTerm2) {
-				
-					forms[[countModel]] <- NULL
-				
-				}
+				if (exactTerm1 & exactTerm2) removeThese <- c(removeThese, countModel)
 	
 			# want exact match for first term, loose match for second
 			} else if (exactMatch1 & !exactMatch2) {
 	
-				if (exactTerm1 & looseTerm2) {
-	
-					forms[[countModel]] <- NULL
-	
-				}
+				if (exactTerm1 & looseTerm2) removeThese <- c(removeThese, countModel)
 				
 			# want exact match for second term, loose match for first
 			} else if (!exactMatch1 & exactMatch2) {
 	
-				if (looseFirstTerm & exactTerm2) {
-				
-					forms[[countModel]] <- NULL
-				
-				}
+				if (looseFirstTerm & exactTerm2) removeThese <- c(removeThese, countModel)
 				
 			# want loose match for both terms
 			} else if (!exactMatch1 & !exactMatch2) {
 
-				if (looseTerm1 & looseTerm2) {
+				if (looseTerm1 & looseTerm2) removeThese <- c(removeThese, countModel)
 				
-					forms[[countModel]] <- NULL
-				
-				}
 			}
 	
 		} # next verbotenCombos list
 	
 	} # next model
 
+	if (length(removeThese) > 0) forms <- rlist::list.remove(forms, removeThese)
+	
 	forms
 	
 })

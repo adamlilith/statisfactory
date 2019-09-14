@@ -12,7 +12,7 @@
 #' @param maxTerms Either a positive integer representing the maximum number of terms allowed to be in a model, \emph{or} \code{NULL} (default) in which case there is no practical limit on the number of terms in a model.
 #' @param verbose Logical, if \code{TRUE} then display progress. Default is \code{FALSE}.
 #' @return A vector of formulae.
-#' @details  The argument \code{verbotenCombos} can be used to specify variables or terms that should not occur in the same formula. The argument \code{verbotenCombos} is composed of a list of lists. Each sublist comprises names of two variables or terms stated as characters followed by two logical values (\code{TRUE}/\code{FALSE}). The second variable/term is removed from the model if the first is in the model. If the first logical value is \code{TRUE} then the second variable/term is removed if the first variable appears alone in the formula (e.g., not in an interaction with another variable). If the first logical value is \code{FALSE} then the second variable/term is removed if the first variable/term appears in any term (e.g., as an interaction with another term). 
+#' @details  The argument \code{verbotenCombos} can be used to specify variables or terms that should not occur in the same formula. The argument \code{verbotenCombos} is composed of a list of lists. Each sublist comprises names of two variables or terms stated as characters followed by two logical values (\code{TRUE}/\code{FALSE}). The second variable/term is removed from the model if the first is in the model. If the first logical value is \code{TRUE} then the second variable/term is removed if the first variable appears alone in the formula (e.g., not in an interaction with another variable). If the first logical value is \code{FALSE} then the second variable/term is removed if the first variable/term appears in any term (e.g., as an interaction with another term).
 #' Examples: \itemize{
 #' \item \code{verbotenCombos=list(list('x1', 'x2', TRUE, TRUE))}: Removes \code{x2} if \code{x1} occurs in the model as a linear term.
 #' \item \code{verbotenCombos=list(list('x1', 'x2', FALSE, TRUE))}: Removes the linear term \code{x2} if \code{x1} occurred in \emph{any} term in the model.
@@ -58,7 +58,7 @@ makeFormulae <- function(
 
 	### linear term-only models
 	###########################
-	
+
 		if (verbose) omnibus::say('Making formulae with just linear terms...')
 
 		linearModels <- list()
@@ -67,7 +67,7 @@ makeFormulae <- function(
 
 			modelAsList <- apply(combn(preds, countTerms), 2, as.list)
 			for (count in seq_along(modelAsList)) linearModels[[length(linearModels) + 1]] <- unlist(modelAsList[[count]])
-			
+
 		}
 
 		if (!is.null(verboten)) linearModels <- .removeVerbotenVariables(linearModels, verboten=verboten)
@@ -76,22 +76,22 @@ makeFormulae <- function(
 
 	### quadratic models
 	####################
-		
+
 		if (quad) {
 
 			quadModels <- list()
 
 			### all quadratic models with just linear terms that appear also as quadratic terms
 			###################################################################################
-			
+
 				if (verbose) omnibus::say('Making formulae with just linear terms that appear also as quadratic terms...')
-				
+
 				for (countTerms in 1:stopAt) {
 
 					modelAsList <- apply(combn(preds, countTerms), 2, as.list)
-					for (count in seq_along(modelAsList)) quadModels[[length(quadModels) + 1]] <- 
+					for (count in seq_along(modelAsList)) quadModels[[length(quadModels) + 1]] <-
 						c(unlist(modelAsList[[count]]), paste('I(', unlist(modelAsList[[count]]), '^2)', sep=''))
-					
+
 				}
 
 				# remove models above a given order
@@ -99,7 +99,7 @@ makeFormulae <- function(
 
 					numTerms <- unlist(lapply(quadModels, length))
 					wantModels <- which(numTerms <= maxTerms)
-					
+
 					selectModels <- list()
 					for (want in wantModels) selectModels[[length(selectModels) + 1]] <- quadModels[[want]]
 					quadModels <- selectModels
@@ -109,20 +109,22 @@ makeFormulae <- function(
 				# remove models with forbidden term combinations
 				if (!is.null(verboten)) quadModels <- .removeVerbotenVariables(quadModels, verboten=verboten)
 				if (!is.null(verbotenCombos)) quadModels <- .removeVerbotenVariableCombos(quadModels, verbotenCombos=verbotenCombos)
-			
+
 			### models with linear terms that do not also appear as quadratic terms
 			#######################################################################
-				
-				if (verbose) cat('Making formulae with quadratic and appropriate linear terms plus linear terms that do not also appear as quadratic terms...')
-				
+
+				if (verbose) cat('Making formulae with quadratic and appropriate linear\n
+								  terms plus linear terms that do not also appear as\n
+								  quadratic terms...')
+
 				for (countQuad in seq_along(quadModels)) {
-				
+
 					for (countLinear in seq_along(linearModels)) {
-					
+
 						quadModels[[length(quadModels) + 1]] <- unique(c(linearModels[[countLinear]], quadModels[[countQuad]]))
-					
+
 					}
-					
+
 				}
 
 				# remove redundant models
@@ -133,7 +135,7 @@ makeFormulae <- function(
 
 					numTerms <- unlist(lapply(quadModels, length))
 					wantModels <- which(numTerms <= maxTerms)
-					
+
 					selectModels <- list()
 					for (want in wantModels) selectModels[[length(selectModels) + 1]] <- quadModels[[want]]
 					quadModels <- selectModels
@@ -145,46 +147,46 @@ makeFormulae <- function(
 				if (!is.null(verbotenCombos)) quadModels <- .removeVerbotenVariableCombos(quadModels, verbotenCombos=verbotenCombos)
 
 			# remember
-			for (count in seq_along(quadModels)) models[[length(models) + 1]] <- quadModels[[count]]
-			
+			models <- c(models, quadModels)
+
 		}
 
 	### models with 2-ways interactions
 	###################################
-		
+
 		iaModels <- list()
 
 		if (ia & length(preds) > 1) {
 
 			# all models with 2-way interactions where linear terms also appear in interaction terms
 			if (verbose) omnibus::say('Making formulae with two-way interaction and appropriate linear terms...')
-			
+
 			for (countTerms in 2:stopAt) {
-			
+
 				theseTerms <- combn(preds, countTerms)
-			
+
 				linearRows <- nrow(theseTerms)
-			
+
 				for (countTermOne in 1:(linearRows - 1)) {
-				
+
 					for (countTermTwo in (countTermOne + 1):linearRows) {
-				
+
 						theseTerms <- rbind(theseTerms, paste(theseTerms[countTermOne, ], theseTerms[countTermTwo, ], sep=':'))
-				
+
 					}
-				
+
 				}
-				
+
 				for (countModels in 1:ncol(theseTerms)) iaModels[[length(iaModels) + 1]] <- c(theseTerms[ , countModels])
-				
+
 			}
-			
+
 			# remove models above a given order
 			if (!is.null(maxTerms)) {
 
 				numTerms <- unlist(lapply(iaModels, length))
 				wantModels <- which(numTerms <= maxTerms)
-				
+
 				selectModels <- list()
 				for (want in wantModels) selectModels[[length(selectModels) + 1]] <- iaModels[[want]]
 				iaModels <- selectModels
@@ -193,22 +195,22 @@ makeFormulae <- function(
 
 			# if there are any IA models
 			if (length(iaModels) > 0) {
-			
+
 				# remove models with forbidden term combinations
 				if (!is.null(verboten)) iaModels <- .removeVerbotenVariables(iaModels, verboten=verboten)
 				if (!is.null(verbotenCombos)) iaModels <- .removeVerbotenVariableCombos(iaModels, verbotenCombos=verbotenCombos)
-				
+
 				# all models with 2-way interaction terms with appropriate linear terms and some other linear terms that are not part of interaction terms
-				if (verbose) cat('Making formulae with two-way interaction and appropriate linear terms plus\n   other linear terms that are not part of interaction terms...\n'); flush.console()
+				if (verbose) omnibus::say('Making formulae with two-way interaction and appropriate linear terms plus\n   other linear terms that are not part of interaction terms...')
 
 				for (countIa in seq_along(iaModels)) {
-				
+
 					for (countLinear in seq_along(linearModels)) {
-					
+
 						iaModels[[length(iaModels) + 1]] <- unique(c(linearModels[[countLinear]], iaModels[[countIa]]))
-					
+
 					}
-					
+
 				}
 
 				# remove redundant models
@@ -219,7 +221,7 @@ makeFormulae <- function(
 
 					numTerms <- unlist(lapply(iaModels, length))
 					wantModels <- which(numTerms <= maxTerms)
-					
+
 					selectModels <- list()
 					for (want in wantModels) selectModels[[length(selectModels) + 1]] <- iaModels[[want]]
 					iaModels <- selectModels
@@ -232,10 +234,10 @@ makeFormulae <- function(
 
 				# remember
 				for (count in seq_along(iaModels)) models[[length(models) + 1]] <- iaModels[[count]]
-				
+
 			}
-			
-		}	
+
+		}
 
 	### models with quadratic and interaction terms
 	###############################################
@@ -246,15 +248,15 @@ makeFormulae <- function(
 
 			# add quadratic and interaction models
 			if (verbose) omnibus::say('Making formulae with all possible two-way interaction, quadratic, and appropriate linear terms...')
-			
+
 			for (countQuad in seq_along(quadModels)) {
 
 				for (countIa in seq_along(iaModels)) {
-				
+
 					iaQuadModels[[length(iaQuadModels) + 1]] <- c(quadModels[[countQuad]], iaModels[[countIa]])
-					
+
 				}
-				
+
 			}
 
 			# remove redundant models
@@ -265,7 +267,7 @@ makeFormulae <- function(
 
 				numTerms <- unlist(lapply(iaQuadModels, length))
 				wantModels <- which(numTerms <= maxTerms)
-				
+
 				selectModels <- list()
 				for (want in wantModels) selectModels[[length(selectModels) + 1]] <- iaQuadModels[[want]]
 				iaQuadModels <- selectModels
@@ -273,25 +275,25 @@ makeFormulae <- function(
 			}
 
 			# remove models with forbidden term combinations
-			if (!is.null(verboten)) iaQuadModels <- .removeVerbotenVariables(iaQuadModels, verboten=verboten)
-			if (!is.null(verbotenCombos)) iaQuadModels <- .removeVerbotenVariableCombos(iaQuadModels, verbotenCombos=verbotenCombos)
+			if (!is.null(verboten) & length(iaQuadModels) > 0) iaQuadModels <- .removeVerbotenVariables(iaQuadModels, verboten=verboten)
+			if (!is.null(verbotenCombos) & length(iaQuadModels) > 0) iaQuadModels <- .removeVerbotenVariableCombos(iaQuadModels, verbotenCombos=verbotenCombos)
 
 			### add linear terms that may not be in combined quad and interaction models
 			############################################################################
-			
-			if (verbose) omnibus::say('Making formulae with all possible two-way interaction, quadratic, and appropriate linear terms plus linear terms not already in formula...')
+
+			if (verbose) omnibus::say('Making formulae with all possible two-way interaction, quadratic,\n    and appropriate linear terms plus linear terms not already in formula...')
 
 			# if there are still any IA quadratic models
 			if (length(iaQuadModels) > 0) {
-				
+
 				for (countIaQuad in seq_along(iaQuadModels)) {
 
 					for (countLinear in seq_along(linearModels)) {
-					
+
 						iaQuadModels[[length(iaQuadModels) + 1]] <- c(linearModels[[countLinear]], iaQuadModels[[countIaQuad]])
-				
+
 					}
-				
+
 				}
 
 				# remove redundant models
@@ -303,9 +305,9 @@ makeFormulae <- function(
 
 				# remember
 				for (count in seq_along(iaQuadModels)) models[[length(models) + 1]] <- iaQuadModels[[count]]
-				
+
 			}
-			
+
 		}
 
 	### remove models below a desired order
@@ -313,7 +315,7 @@ makeFormulae <- function(
 
 		numTerms <- unlist(lapply(models, length))
 		wantModels <- which(numTerms >= minTerms)
-		
+
 		selectModels <- list()
 		for (want in wantModels) selectModels[[length(selectModels) + 1]] <- models[[want]]
 		models <- selectModels
@@ -325,7 +327,7 @@ makeFormulae <- function(
 
 		numTerms <- unlist(lapply(models, length))
 		wantModels <- which(numTerms <= maxTerms)
-		
+
 		selectModels <- list()
 		for (want in wantModels) selectModels[[length(selectModels) + 1]] <- models[[want]]
 		models <- selectModels
@@ -346,7 +348,7 @@ makeFormulae <- function(
 		if (interceptOnly) forms[[length(forms) + 1]] <- paste(resp, '~', 1)
 
 		forms <- sapply(forms, returnFx)
-		
+
 	} else {
 		forms <- returnFx(character())
 	}
