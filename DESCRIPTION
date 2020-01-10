@@ -7,11 +7,11 @@ Author: Adam B. Smith <adam.smith@mobot.org>
 Maintainer: Adam B. Smith <adam.smith@mobot.org>
 Description: This package contains functions for implementing
     statistical tests and help functions thereof.
-Remotes:
-	adamlilith/omnibus,
 Depends:
 Imports:
 	rlist
+Remotes:
+	adamlilith/omnibus
 Suggests:
 License: GPL (>=3) + file LICENSE
 LazyData: false
