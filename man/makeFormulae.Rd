@@ -4,10 +4,20 @@
 \alias{makeFormulae}
 \title{Make all possible formula}
 \usage{
-makeFormulae(formula, intercept = TRUE, interceptOnly = TRUE,
-  linearOnly = TRUE, quad = TRUE, ia = TRUE, verboten = FALSE,
-  verbotenCombos = NULL, minTerms = NULL, maxTerms = NULL,
-  returnFx = as.formula, verbose = FALSE)
+makeFormulae(
+  formula,
+  intercept = TRUE,
+  interceptOnly = TRUE,
+  linearOnly = TRUE,
+  quad = TRUE,
+  ia = TRUE,
+  verboten = FALSE,
+  verbotenCombos = NULL,
+  minTerms = NULL,
+  maxTerms = NULL,
+  returnFx = as.formula,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{formula}{A \code{formula} object with \emph{just} linear terms.}
