@@ -4,8 +4,7 @@
 \alias{hist2d}
 \title{Two-dimensional histogram}
 \usage{
-hist2d(x, breaks1 = "Sturges", breaks2 = "Sturges", right = TRUE,
-  ...)
+hist2d(x, breaks1 = "Sturges", breaks2 = "Sturges", right = TRUE, ...)
 }
 \arguments{
 \item{x}{Data frame or matrix with at least two columns. Only frequencies in the first two columns are used.}
