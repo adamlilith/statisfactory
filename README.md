@@ -2,10 +2,8 @@
 
 This package contains various statistical tools and helper functions. You can install this package in R using these commands:
 
-`install.packages('devtools') # if you haven't done this already`  
-`library(devtools)`  
-`devtools::install_github('adamlilith/omnibus')`  
-`devtools::install_github('adamlilith/statisfactory')`  
+`remotes::install_github('adamlilith/omnibus')`  
+`remotes::install_github('adamlilith/statisfactory')`  
 
 NB: If for some reason these commands don't work, you can install the package(s) by downloading the latest zip/tar file from the `zipTarFiles` directory and installing the package(s) manually.
 
