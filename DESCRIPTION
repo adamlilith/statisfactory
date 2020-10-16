@@ -1,8 +1,8 @@
 Package: statisfactory
 Type: Package
 Title: Statistical Tools
-Version: 0.3.3
-Date: 2020-05-19
+Version: 0.3.4
+Date: 2020-10-16
 Author: Adam B. Smith <adam.smith@mobot.org>
 Maintainer: Adam B. Smith <adam.smith@mobot.org>
 Description: This package contains functions for implementing
@@ -18,4 +18,4 @@ LazyData: false
 LazyLoad: yes
 URL: http://www.earthSkySea.org
 Encoding: UTF-8
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1

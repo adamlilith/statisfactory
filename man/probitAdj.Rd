@@ -19,13 +19,13 @@ probitAdj(x, epsilon = 0.01, base = 10, auto = FALSE)
 Numeric.
 }
 \description{
-This function is the inverse of \code{\link[statisfactory]{logitAdj}}. That function calculates the logit of values but is robust to cases where the operanc is 0 or 1. The adjusted probit is equal to \code{(base^x + epsilon * base^x - epsilon) / (base^x + 1)}.
+This function is the inverse of \code{\link[statisfactory]{logitAdj}}. That function calculates the logit of values but is robust to cases where the operand is 0 or 1. The adjusted probit is equal to \code{(base^x + epsilon * base^x - epsilon) / (base^x + 1)}. \emph{This function will be deprecated in future versions. Please use \code{\link{invLogitAdj}} instead}.
 }
 \examples{
 x <- seq(0, 1, by=0.1)
 y <- logitAdj(x)
-xx <- probitAdj(y, auto = TRUE)
+xx <- invLogitAdj(y, auto = TRUE)
 }
 \seealso{
-\code{\link[statisfactory]{logitAdj}}
+\code{\link[statisfactory]{logitAdj}},  \code{\link[statisfactory]{invLogitAdj}}
 }
