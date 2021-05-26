@@ -27,6 +27,9 @@ NB: If for some reason these commands do not work, you can install the package(s
 * `sampleAcross`: Permute values across two vectors or columns in two data frames or matrices
 * `sampleStrat`: Sample values stratified by one or more other variables
 
+## Statistics ##
+* `nagelR2`: Nagelkerge's / Craig & Uhler's R2
+
 ## Plots ##
 * `hist2d`: Two-dimensional histogram
 * `histOverlap`: Histogram with overlapping or arbitrary bins
