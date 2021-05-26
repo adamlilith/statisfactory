@@ -4,12 +4,14 @@
 \alias{euclid}
 \title{Euclidean distance}
 \usage{
-euclid(a, b)
+euclid(a, b, na.rm = FALSE)
 }
 \arguments{
 \item{a}{Numeric vector.}
 
 \item{b}{Numeric vector of same length as \code{a}.}
+
+\item{na.rm}{Logical. If \code{TRUE}, calculation ignores \code{NA}'s in \code{a} and/or \code{b}.}
 }
 \value{
 Numeric.
