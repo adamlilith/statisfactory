@@ -1,6 +1,6 @@
 #' Two-dimensional histogram
 #'
-#' @param x Data frame or matrix with at least two columns. Only frequencies in the first two columns are used.
+#' @param x Data frame or matrix with at least two columns. Only first two columns are used to tally frequencies.
 #' @param breaks1 One of the following describing how breaks for the first variable are calculated:
 #' \itemize{
 #' \item Numeric vector: Breakpoints for bins for the first variable.
@@ -12,7 +12,7 @@
 #' @param breaks2 Same as \code{breaks1} but for the second variable.
 #' @param right Logical, if \code{TRUE} (default) then use left-open and right-closed intervals.
 #' @param ... Arguments to pass to \code{\link[graphics]{hist}}.
-#' @return Object of class \code{matrix} and \code{histogram2d}. Columns pertain to bins of \code{x1} and rows {x2}. Column names and row names are mid-points of bins.
+#' @return Object of class \code{matrix} and \code{histogram2d}. Columns pertain to bins of \code{x1} and rows \code{x2}. Column names and row names are mid-points of bins.
 #' @seealso \code{\link[graphics]{hist}}
 #' @examples
 #' x1 <- rnorm(1000)

@@ -7,7 +7,7 @@
 hist2d(x, breaks1 = "Sturges", breaks2 = "Sturges", right = TRUE, ...)
 }
 \arguments{
-\item{x}{Data frame or matrix with at least two columns. Only frequencies in the first two columns are used.}
+\item{x}{Data frame or matrix with at least two columns. Only first two columns are used to tally frequencies.}
 
 \item{breaks1}{One of the following describing how breaks for the first variable are calculated:
 \itemize{
@@ -25,7 +25,7 @@ hist2d(x, breaks1 = "Sturges", breaks2 = "Sturges", right = TRUE, ...)
 \item{...}{Arguments to pass to \code{\link[graphics]{hist}}.}
 }
 \value{
-Object of class \code{matrix} and \code{histogram2d}. Columns pertain to bins of \code{x1} and rows {x2}. Column names and row names are mid-points of bins.
+Object of class \code{matrix} and \code{histogram2d}. Columns pertain to bins of \code{x1} and rows \code{x2}. Column names and row names are mid-points of bins.
 }
 \description{
 Two-dimensional histogram
