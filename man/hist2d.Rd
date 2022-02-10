@@ -31,10 +31,12 @@ Object of class \code{matrix} and \code{histogram2d}. Columns pertain to bins of
 Two-dimensional histogram
 }
 \examples{
+
 x1 <- rnorm(1000)
 x2 <- 0.5 * x1 * rnorm(1000)
 x <- data.frame(x1=x1, x2=x2)
 hist2d(x)
+
 }
 \seealso{
 \code{\link[graphics]{hist}}

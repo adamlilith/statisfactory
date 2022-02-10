@@ -17,9 +17,10 @@ sampleAcross(..., by = NULL, replace = FALSE)
 A list object with same number of elements as in \code{...} with the original dimensions. The order is the same as in \code{...} (e.g., so if the call is like \code{sampleAcross(a, b, c)} then the output will be a list with permuted versions of \code{a}, \code{b}, and \code{c} in that order).
 }
 \description{
-This function permutes values across two or more vectors or columns across two or more data frames or matrices. If vectors then all values are swapped randomly and the output is a list object with vectors of the same length. If data frames or matrices then values in selected columns are swapped across the data frames or matrices and the output is a list object with data frames or matrices of the same dimension as the originals.
+This function permutes values across two or more vectors or columns between two or more data frames or matrices. If vectors, then all values are swapped randomly and the output is a list object with vectors of the same length. If data frames or matrices, then values in selected columns are swapped across the data frames or matrices and the output is a list object with data frames or matrices of the same dimension as the originals.
 }
 \examples{
+
 x1 <- 1:5
 x2 <- 6:10
 x3 <- 50:60
@@ -30,7 +31,8 @@ a <- data.frame(x=1:10, y=letters[1:10])
 b <- data.frame(x=11:20, y=letters[11:20])
 sampleAcross(a, b, by='y')
 sampleAcross(a, b)
+
 }
 \seealso{
-\code{\link{sample}}
+\code{\link[base]{sample}}
 }

@@ -7,7 +7,7 @@
 logitAdj(x, epsilon = 0.01, base = 10)
 }
 \arguments{
-\item{x}{Numeric list.}
+\item{x}{Numeric vector.}
 
 \item{epsilon}{Value to add/subtract from x to ensure log of 0 or 1 is not taken (usually a small number). If \code{NULL}, then the smallest value of any \code{x} > 0 and \code{1 - x} for all \code{x} < 1 is used.}
 
@@ -20,14 +20,16 @@ Numeric equal to \code{log((x + epsilon)/(1 - x + epsilon), base=base)}.
 This function returns the logit value (\code{log(x / (1 - x))}) where a small value can be added to \code{x} to avoid problems of calculating the log when \code{x} equals 0 or 1.
 }
 \examples{
+
 set.seed(123)
 x <- seq(0, 1, by=0.01)
 logitAdj(x)
 logitAdj(x, 0.001)
-probitAdj(x, 0.001)
-probitAdj(x, 0.001)
-probitAdj(x, auto = TRUE)
+invLogitAdj(x, 0.001)
+invLogitAdj(x, 0.001)
+invLogitAdj(x, auto = TRUE)
+
 }
 \seealso{
-\code{\link[statisfactory]{probitAdj}}
+\code{\link[statisfactory]{invLogitAdj}}
 }

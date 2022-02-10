@@ -20,7 +20,7 @@ art(
 
 \item{factors}{Character list. Names of columns of \code{x} used to define factors and levels (default is to use all columns except for the first).}
 
-\item{subject}{NULL or character. Name of column in \code{x} that has the subject variable. If NULL then this is ignored. If specified, residuals are calculated for each cell defined by factors, \emph{not} by subject and factors, but aligning is done using both factors and subject.}
+\item{subject}{\code{NULL} or character. Name of column in \code{x} that has the subject variable. If \code{NULL} then this is ignored. If specified, residuals are calculated for each cell defined by factors, \emph{not} by subject and factors, but aligning is done using both factors and subject.}
 
 \item{fun}{Function. Function used to calculate cell centering statistic (the default is to use: \code{mean} with \code{na.rm=TRUE}). The function can be any that handles a list of one or more elements.}
 
@@ -30,7 +30,7 @@ art(
 Data frame.
 }
 \description{
-This function performs the aligned rank transforms on non-parametric data. This is useful for further analysis using parametric techniques like ANOVA.
+This function performs the aligned rank transforms on non-parametric data which is useful for further analysis using parametric techniques like ANOVA.
 }
 \details{
 The function successfully re-creates rankings given by \strong{ARTool} (Wobbrock et al. 2011) of data in Higgins et al. (1990) for data with 2 and 3 factors.
@@ -48,9 +48,9 @@ x <- data.frame(
 art(x=x, response='response', factors=c('factor1', 'factor2'))
 }
 \references{
-Higgins, J.J., Blair, R.C., and Tashtoush, S.  1990.  The aligned rank transform procedure.  \emph{Proceedings of the Conference on Applied Statistics in Agriculture.}  Manhattan, Kansas: Kansas State University, pp. 185-195.
+Higgins, J.J., Blair, R.C., and Tashtoush, S.  1990.  The aligned rank transform procedure.  \emph{Proceedings of the Conference on Applied Statistics in Agriculture.}  Manhattan, Kansas: Kansas State University, pp. 185-195. \href{https://doi.org/10.4148/2475-7772.1443}{doi: 10.4148/2475-7772.1443}
 
-Peterson, K.  2002.  Six modifications of the aligned rank transform test for interaction. \emph{Journal of Modern Applied Statistical Methods} 1:100-109.
+Peterson, K.  2002.  Six modifications of the aligned rank transform test for interaction. \emph{Journal of Modern Applied Statistical Methods} 1:100-109. \href{https://dx.doi.org/10.22237/jmasm/1020255240}{10.22237/jmasm/1020255240}
 
-Wobbrock, J.O., Findlater, L., Gergle, D., and Higgins, J.J.  2011. The aligned rank transform for nonparametric factorial analysis using only ANOVA procedures.  \emph{Proceedings of the ACM Conference on Human Factors in Computing Systems (CHI 2011).} Vancouver, British Columbia (May 7-12, 2011). New York: ACM Press, pp. 143-146.
+Wobbrock, J.O., Findlater, L., Gergle, D., and Higgins, J.J.  2011. The aligned rank transform for nonparametric factorial analysis using only ANOVA procedures.  \emph{Proceedings of the ACM Conference on Human Factors in Computing Systems (CHI 2011).} Vancouver, British Columbia (May 7-12, 2011). New York: ACM Press, pp. 143-146. \href{https://dx.doi.org/10.1145/1978942.1978963}{doi: 10.1145/1978942.1978963}.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/rmsd.r
 \name{rmsd}
 \alias{rmsd}
-\title{Root-mean-square deviation}
+\title{Root-mean-square deviation (error)}
 \usage{
 rmsd(x1, x2, w = NULL, na.rm = FALSE)
 }
@@ -52,4 +52,5 @@ x2 <- matrix(20:1, ncol=5)
 w <- function(x) 1 - exp(-x)
 rmsd(x1, x2)
 rmsd(x1, x2, w)
+
 }

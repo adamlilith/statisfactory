@@ -15,7 +15,7 @@ makeFormulae(
   verbotenCombos = NULL,
   minTerms = NULL,
   maxTerms = NULL,
-  returnFx = as.formula,
+  returnFx = stats::as.formula,
   verbose = FALSE
 )
 }
@@ -26,9 +26,11 @@ makeFormulae(
 
 \item{interceptOnly}{Logical, if \code{TRUE} then an intercept-only model is included in final set.}
 
-\item{linearOnly}{Logical, if TRUE then models with only linear terms are included in final set (plus other kinds of models if desired).}
+\item{linearOnly}{Logical, if \code{TRUE} (default) then models with only linear terms are included in final set (plus other kinds of models if desired).}
 
-\item{quad}{Logical, if TRUE then include quadratic terms.}
+\item{quad}{Logical, if \code{TRUE} (default), then include quadratic terms.}
+
+\item{ia}{Logical, if \code{TRUE} (default), then include 2-way interaction terms.}
 
 \item{verboten}{Character list of terms that should not appear in the models. Ignored if \code{NULL} (default). Note that using this argument only makes sense if interaction or quadratic terms are specified (if you don't a particular term to appear anywhere in the model it will be faster to remove it from \code{formula}).}
 
@@ -38,29 +40,32 @@ makeFormulae(
 
 \item{maxTerms}{Either a positive integer representing the maximum number of terms allowed to be in a model, \emph{or} \code{NULL} (default) in which case there is no practical limit on the number of terms in a model.}
 
+\item{returnFx}{Function used to generate the class of the output objects. Sensible functions in include \code{\link[stats]{as.formula}} (default) or \code{\link{as.character}}.}
+
 \item{verbose}{Logical, if \code{TRUE} then display progress. Default is \code{FALSE}.}
 }
 \value{
 A vector of formulae.
 }
 \description{
-This functions creates a list of formulae that contain all possible linear, quadratic, and two-way interaction terms from predictors in an object of class \code{formula}. The formulae respect marginality conditions (e.g. they will always include linear terms of variables also included as quadratic or interaction terms). Note that if there are more than several terms (i.e., >=3) and interactions and/or quadratic terms are desired, then formula generation may take a long time.
+This functions creates a list of formulae that contain all possible linear, quadratic, and two-way interaction terms from individual terms in an object of class \code{formula}. The formulae respect marginality conditions (i.e., they will always include lower-order terms if higher-order terms are included in a formula). Note that if there are more than several terms (i.e., >=3) and interactions and/or quadratic terms are desired, then formula generation may take a long time.
 }
 \details{
 The argument \code{verbotenCombos} can be used to specify variables or terms that should not occur in the same formula. The argument \code{verbotenCombos} is composed of a list of lists. Each sublist comprises names of two variables or terms stated as characters followed by two logical values (\code{TRUE}/\code{FALSE}). The second variable/term is removed from the model if the first is in the model. If the first logical value is \code{TRUE} then the second variable/term is removed if the first variable appears alone in the formula (e.g., not in an interaction with another variable). If the first logical value is \code{FALSE} then the second variable/term is removed if the first variable/term appears in any term (e.g., as an interaction with another term).
 Examples: \itemize{
 \item \code{verbotenCombos=list(list('x1', 'x2', TRUE, TRUE))}: Removes \code{x2} if \code{x1} occurs in the model as a linear term.
-\item \code{verbotenCombos=list(list('x1', 'x2', FALSE, TRUE))}: Removes the linear term \code{x2} if \code{x1} occurred in \emph{any} term in the model.
-\item \code{verbotenCombos=list(list('x1', 'x2', TRUE, FALSE))}: Removes \emph{any} term with \code{x2} if the linear term \code{x1} occurred in the model.
-\item \code{verbotenCombos=list(list('x1', 'x2', FALSE, FALSE))}: Removes any term with \code{x2} if any term had \code{x1}.
+\item \code{verbotenCombos=list(list('x1', 'x2', FALSE, TRUE))}: Removes the linear term \code{x2} if \code{x1} occurrs in \emph{any} term in the model.
+\item \code{verbotenCombos=list(list('x1', 'x2', TRUE, FALSE))}: Removes \emph{any} term with \code{x2} if the linear term \code{x1} occurrs in the model.
+\item \code{verbotenCombos=list(list('x1', 'x2', FALSE, FALSE))}: Removes any term with \code{x2} if any term has \code{x1}.
 }
-Quadratic terms and interaction terms can also be stated, so: \itemize{
+Quadratic terms and interaction terms can also be used, so: \itemize{
 \item \code{verbotenCombos=list(list('x1', 'x1:x2', TRUE, TRUE))}: Removes \code{x1:x2} if \code{x1} were in the model.
-\item \code{verbotenCombos=list(list('x1', 'I(x2^2)', TRUE, TRUE))}: Removes \code{I(x2^2)}.
+\item \code{verbotenCombos=list(list('x1', 'I(x2^2)', TRUE, TRUE))}: Removes \code{I(x2^2)} if \code{x1} occurs in the model.
 }
-Note that inexact matching can remove terms incorrectly if inexact matches exist between names of terms or variables.  For example, if using an inexact match, then \code{verbotenCombos(list('x1', 'x2', FALSE, FALSE))} will find any term that has an \code{x1} (e.g., \code{x11}) and if it exists, remove any term with an \code{x2} (e.g., \code{x25}). Note that reciprocally removing predictors makes little sense since, for example \code{list(list('x1', 'x2', FALSE, FALSE), list('x2', 'x1', FALSE, FALSE))} removes all formulae with \code{x2} if \code{x1} appears then tries to find any models with \code{x2} that have \code{x1} (of which there are none).
+Note that inexact matching can remove terms incorrectly if inexact matches exist between names of terms or variables.  For example, if using an inexact match, then \code{verbotenCombos(list('x1', 'x2', FALSE, FALSE))} will find any term that has an \code{x1} (e.g., \code{x11}) and if it exists, remove any term with an \code{x2} (e.g., \code{x25}). Note that reciprocally removing predictors makes little sense since, for example \code{list(list('x1', 'x2', FALSE, FALSE), list('x2', 'x1', FALSE, FALSE))} removes all formulae with \code{x2} if \code{x1} appears then tries to find any models with \code{x2} that have \code{x1} (of which there will be none after the first set is removed).
 }
 \examples{
+
 makeFormulae(y ~ x1 + x2 + x3, maxTerms=3)
 makeFormulae(y ~ x1 + x2 + x3, ia=FALSE, maxTerms=3)
 verboten <- c('x1:x2', 'I(x1^2)')
@@ -68,4 +73,5 @@ makeFormulae(y ~ x1 + x2 + x3, verboten=verboten, maxTerms=3)
 makeFormulae(y ~ x1 + x2 + x3, verbotenCombos=verbotenCombos, maxTerms=3)
 verbotenCombos <- list(list('x1', 'x2', TRUE, TRUE))
 makeFormulae(y ~ x1 + x2 + x3, verbotenCombos=verbotenCombos, maxTerms=3)
+
 }

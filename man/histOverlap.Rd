@@ -29,12 +29,15 @@ Matrix
 Count number of values in overlapping bins
 }
 \examples{
-x <- runif(10000)
+
+set.seed(123)
+x <- rnorm(1000)
 histOverlap(x, breaks=10, graph=TRUE)
 histOverlap(x, breaks=c(0, 1, 10), graph=TRUE)
 mat <- matrix(c(seq(0, 1, by=0.1), seq(0.3, 1.3, by=0.1)), ncol=2)
 histOverlap(x, breaks=mat, graph=TRUE)
 histOverlap(x, breaks=mat, indices=TRUE)
+
 }
 \seealso{
 \code{\link[graphics]{hist}}

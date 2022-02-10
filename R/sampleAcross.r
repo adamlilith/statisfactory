@@ -1,12 +1,13 @@
 #' Permute values across two vectors or columns in two data frames or matrices
 #' 
-#' This function permutes values across two or more vectors or columns across two or more data frames or matrices. If vectors then all values are swapped randomly and the output is a list object with vectors of the same length. If data frames or matrices then values in selected columns are swapped across the data frames or matrices and the output is a list object with data frames or matrices of the same dimension as the originals.
+#' This function permutes values across two or more vectors or columns between two or more data frames or matrices. If vectors, then all values are swapped randomly and the output is a list object with vectors of the same length. If data frames or matrices, then values in selected columns are swapped across the data frames or matrices and the output is a list object with data frames or matrices of the same dimension as the originals.
 #' @param ... One or more vectors, data frames, or matrices (all objects must be the same class).
 #' @param replace Logical. If \code{TRUE} then sample with replacement. If \code{FALSE} (default) then sample without replacement.
 #' @param by Character list or list of integers. Names of columns or column numbers to permute (only used if \code{...} is data frames or matrices). If left as \code{NULL} (default) the all columns are permuted.
 #' @return A list object with same number of elements as in \code{...} with the original dimensions. The order is the same as in \code{...} (e.g., so if the call is like \code{sampleAcross(a, b, c)} then the output will be a list with permuted versions of \code{a}, \code{b}, and \code{c} in that order).
-#' @seealso \code{\link{sample}}
+#' @seealso \code{\link[base]{sample}}
 #' @examples
+#'
 #' x1 <- 1:5
 #' x2 <- 6:10
 #' x3 <- 50:60
@@ -17,21 +18,23 @@
 #' b <- data.frame(x=11:20, y=letters[11:20])
 #' sampleAcross(a, b, by='y')
 #' sampleAcross(a, b)
+#'
 #' @export
 
-# combine two data frames, permute along one or more variables, and re-replit into input data frames with same number of original rows
 sampleAcross <- compiler::cmpfun(function(
 	...,
 	by = NULL,
 	replace = FALSE
 ) {
 
+	# BAUHAUS: combine two data frames, permute along one or more variables, and re-replit into input data frames with same number of original rows
+
 	# input/output
 	input <- list(...)
 	out <- list()
 
 	# if data frames or matrices permute columns
-	if (class(input[[1]]) %in% c('data.frame', 'maxtrix')) {
+	if (inherits(input[[1]], c('data.frame', 'matrix'))) {
 		
 		# combine
 		x <- input[[1]]
@@ -89,7 +92,7 @@ sampleAcross <- compiler::cmpfun(function(
 	# called <- as.list(substitute(list(...)))[-1L]
 	# inNames <- character()
 	# for (i in seq_along(input)) inNames <- c(inNames, as.character(called[[i]]))
-	inNames <- ellipseNames(...)
+	inNames <- names(list(...))
 	if (length(inNames) == length(input)) names(out) <- inNames
 	
 	out

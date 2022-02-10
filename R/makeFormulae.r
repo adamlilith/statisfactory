@@ -1,30 +1,37 @@
 #' Make all possible formula
 #'
-#' This functions creates a list of formulae that contain all possible linear, quadratic, and two-way interaction terms from predictors in an object of class \code{formula}. The formulae respect marginality conditions (e.g. they will always include linear terms of variables also included as quadratic or interaction terms). Note that if there are more than several terms (i.e., >=3) and interactions and/or quadratic terms are desired, then formula generation may take a long time.
+#' This functions creates a list of formulae that contain all possible linear, quadratic, and two-way interaction terms from individual terms in an object of class \code{formula}. The formulae respect marginality conditions (i.e., they will always include lower-order terms if higher-order terms are included in a formula). Note that if there are more than several terms (i.e., >=3) and interactions and/or quadratic terms are desired, then formula generation may take a long time.
+#'
 #' @param formula A \code{formula} object with \emph{just} linear terms.
 #' @param intercept Logical, if \code{TRUE} (default) then all models include an intercept.  If \code{FALSE} then then formula will specify that regression occurs through the origin (e.g., \code{y ~ -1 + etc.})
 #' @param interceptOnly Logical, if \code{TRUE} then an intercept-only model is included in final set.
-#' @param linearOnly Logical, if TRUE then models with only linear terms are included in final set (plus other kinds of models if desired).
-#' @param quad Logical, if TRUE then include quadratic terms.
+#' @param linearOnly Logical, if \code{TRUE} (default) then models with only linear terms are included in final set (plus other kinds of models if desired).
+#' @param quad Logical, if \code{TRUE} (default), then include quadratic terms.
+#' @param ia Logical, if \code{TRUE} (default), then include 2-way interaction terms.
 #' @param verboten Character list of terms that should not appear in the models. Ignored if \code{NULL} (default). Note that using this argument only makes sense if interaction or quadratic terms are specified (if you don't a particular term to appear anywhere in the model it will be faster to remove it from \code{formula}).
 #' @param verbotenCombos List of lists, used to specify specific combinations of terms that should not occur together. See section \emph{Details} below. Ignored if \code{NULL} (default).
 #' @param minTerms Either a positive integer representing the minimum number of terms required to be in a model, \emph{or} \code{NULL} (default) in which case the smallest model can have just one term.
 #' @param maxTerms Either a positive integer representing the maximum number of terms allowed to be in a model, \emph{or} \code{NULL} (default) in which case there is no practical limit on the number of terms in a model.
+#' @param returnFx Function used to generate the class of the output objects. Sensible functions in include \code{\link[stats]{as.formula}} (default) or \code{\link{as.character}}.
 #' @param verbose Logical, if \code{TRUE} then display progress. Default is \code{FALSE}.
+#'
 #' @return A vector of formulae.
+#'
 #' @details  The argument \code{verbotenCombos} can be used to specify variables or terms that should not occur in the same formula. The argument \code{verbotenCombos} is composed of a list of lists. Each sublist comprises names of two variables or terms stated as characters followed by two logical values (\code{TRUE}/\code{FALSE}). The second variable/term is removed from the model if the first is in the model. If the first logical value is \code{TRUE} then the second variable/term is removed if the first variable appears alone in the formula (e.g., not in an interaction with another variable). If the first logical value is \code{FALSE} then the second variable/term is removed if the first variable/term appears in any term (e.g., as an interaction with another term).
 #' Examples: \itemize{
 #' \item \code{verbotenCombos=list(list('x1', 'x2', TRUE, TRUE))}: Removes \code{x2} if \code{x1} occurs in the model as a linear term.
-#' \item \code{verbotenCombos=list(list('x1', 'x2', FALSE, TRUE))}: Removes the linear term \code{x2} if \code{x1} occurred in \emph{any} term in the model.
-#' \item \code{verbotenCombos=list(list('x1', 'x2', TRUE, FALSE))}: Removes \emph{any} term with \code{x2} if the linear term \code{x1} occurred in the model.
-#' \item \code{verbotenCombos=list(list('x1', 'x2', FALSE, FALSE))}: Removes any term with \code{x2} if any term had \code{x1}.
+#' \item \code{verbotenCombos=list(list('x1', 'x2', FALSE, TRUE))}: Removes the linear term \code{x2} if \code{x1} occurrs in \emph{any} term in the model.
+#' \item \code{verbotenCombos=list(list('x1', 'x2', TRUE, FALSE))}: Removes \emph{any} term with \code{x2} if the linear term \code{x1} occurrs in the model.
+#' \item \code{verbotenCombos=list(list('x1', 'x2', FALSE, FALSE))}: Removes any term with \code{x2} if any term has \code{x1}.
 #' }
-#' Quadratic terms and interaction terms can also be stated, so: \itemize{
+#' Quadratic terms and interaction terms can also be used, so: \itemize{
 #' \item \code{verbotenCombos=list(list('x1', 'x1:x2', TRUE, TRUE))}: Removes \code{x1:x2} if \code{x1} were in the model.
-#' \item \code{verbotenCombos=list(list('x1', 'I(x2^2)', TRUE, TRUE))}: Removes \code{I(x2^2)}.
+#' \item \code{verbotenCombos=list(list('x1', 'I(x2^2)', TRUE, TRUE))}: Removes \code{I(x2^2)} if \code{x1} occurs in the model.
 #' }
-#' Note that inexact matching can remove terms incorrectly if inexact matches exist between names of terms or variables.  For example, if using an inexact match, then \code{verbotenCombos(list('x1', 'x2', FALSE, FALSE))} will find any term that has an \code{x1} (e.g., \code{x11}) and if it exists, remove any term with an \code{x2} (e.g., \code{x25}). Note that reciprocally removing predictors makes little sense since, for example \code{list(list('x1', 'x2', FALSE, FALSE), list('x2', 'x1', FALSE, FALSE))} removes all formulae with \code{x2} if \code{x1} appears then tries to find any models with \code{x2} that have \code{x1} (of which there are none).
+#' Note that inexact matching can remove terms incorrectly if inexact matches exist between names of terms or variables.  For example, if using an inexact match, then \code{verbotenCombos(list('x1', 'x2', FALSE, FALSE))} will find any term that has an \code{x1} (e.g., \code{x11}) and if it exists, remove any term with an \code{x2} (e.g., \code{x25}). Note that reciprocally removing predictors makes little sense since, for example \code{list(list('x1', 'x2', FALSE, FALSE), list('x2', 'x1', FALSE, FALSE))} removes all formulae with \code{x2} if \code{x1} appears then tries to find any models with \code{x2} that have \code{x1} (of which there will be none after the first set is removed).
+#'
 #' @examples
+#'
 #' makeFormulae(y ~ x1 + x2 + x3, maxTerms=3)
 #' makeFormulae(y ~ x1 + x2 + x3, ia=FALSE, maxTerms=3)
 #' verboten <- c('x1:x2', 'I(x1^2)')
@@ -32,6 +39,7 @@
 #' makeFormulae(y ~ x1 + x2 + x3, verbotenCombos=verbotenCombos, maxTerms=3)
 #' verbotenCombos <- list(list('x1', 'x2', TRUE, TRUE))
 #' makeFormulae(y ~ x1 + x2 + x3, verbotenCombos=verbotenCombos, maxTerms=3)
+#'
 #' @export
 makeFormulae <- function(
 	formula,
@@ -44,7 +52,7 @@ makeFormulae <- function(
 	verbotenCombos=NULL,
 	minTerms=NULL,
 	maxTerms=NULL,
-	returnFx=as.formula,
+	returnFx=stats::as.formula,
 	verbose=FALSE
 ) {
 
@@ -65,7 +73,7 @@ makeFormulae <- function(
 
 		for (countTerms in 1:stopAt) {
 
-			modelAsList <- apply(combn(preds, countTerms), 2, as.list)
+			modelAsList <- apply(utils::combn(preds, countTerms), 2, as.list)
 			for (count in seq_along(modelAsList)) linearModels[[length(linearModels) + 1]] <- unlist(modelAsList[[count]])
 
 		}
@@ -88,7 +96,7 @@ makeFormulae <- function(
 
 				for (countTerms in 1:stopAt) {
 
-					modelAsList <- apply(combn(preds, countTerms), 2, as.list)
+					modelAsList <- apply(utils::combn(preds, countTerms), 2, as.list)
 					for (count in seq_along(modelAsList)) quadModels[[length(quadModels) + 1]] <-
 						c(unlist(modelAsList[[count]]), paste('I(', unlist(modelAsList[[count]]), '^2)', sep=''))
 
@@ -163,7 +171,7 @@ makeFormulae <- function(
 
 			for (countTerms in 2:stopAt) {
 
-				theseTerms <- combn(preds, countTerms)
+				theseTerms <- utils::combn(preds, countTerms)
 
 				linearRows <- nrow(theseTerms)
 
@@ -356,3 +364,227 @@ makeFormulae <- function(
 	forms
 
 }
+
+
+#' Remove formula with unwanted terms.
+#'
+#' This function takes as an argument a list of character strings representing formulae and returns a potentially shortened list without formulae containing a certain term.
+#' @param forms List of characters each representing a formula.
+#' @param verboten Either \code{NULL} (default) in which case \code{forms} is returned without any manipulation. Alternatively, this is a character list of terms that are not allowed to appear in any model in \code{forms}. Models with these terms are removed from \code{forms}. Note that the order of variables in interaction terms does not matter (e.g., \code{x1:x2} will cause the removal of models with this term verbatim as well as \code{x2:x1}). All possible permutations of three-way interaction terms are treated similarly.
+#' @return A list of character elements representing formulae.
+#' @examples
+#' \dontrun{
+#' forms <- list()
+#' forms[[1]] <- 'y ~ x1 + x2 + x3'
+#' forms[[2]] <- 'y ~ x1 + x2 + x3 + I(x1^2)'
+#' forms[[3]] <- 'y ~ x1 + x2 + x3 + x1:x2'
+#' forms[[4]] <- 'y ~ x1 + x2 + x3 + x1:x2 + I(x1^2)'
+#' forms[[5]] <- 'y ~ x1 + x2 + x3 + x1:x2 + x1:x3 + x2:x3'
+#' forms[[6]] <- 'y ~ x1 + x2 + x3 + x1:x2:x3'
+#'
+#' verboten <- 'x1'
+#' .removeVerbotenVariables(forms, verboten)
+#'
+#' verboten <- c('x1', 'x2')
+#' .removeVerbotenVariables(forms, verboten)
+#'
+#' verboten <- 'x1:x2'
+#' .removeVerbotenVariables(forms, verboten)
+#'
+#' verboten <- 'I(x1^2)'
+#' .removeVerbotenVariables(forms, verboten)
+#'
+#' verboten <- 'x3:x2:x1'
+#' .removeVerbotenVariables(forms, verboten)
+#' }
+#' @keywords internal
+.removeVerbotenVariables <- compiler::cmpfun(function(
+	forms,
+	verboten
+) {
+
+	# ensure each variant of an interaction term is represented
+	for (i in seq_along(verboten)) {
+		if (grepl(verboten[i], pattern=':')) {
+
+			splitTerms <- strsplit(verboten[i], split=':')[[1]]
+			swappedTerms <- if (length(splitTerms) == 2) {
+				paste0(splitTerms[2], ':', splitTerms[1])
+			} else if (length(splitTerms) == 3) {
+				c(
+					paste0(splitTerms[1], ':', splitTerms[3], ':', splitTerms[2]),
+					paste0(splitTerms[2], ':', splitTerms[1], ':', splitTerms[3]),
+					paste0(splitTerms[2], ':', splitTerms[3], ':', splitTerms[1]),
+					paste0(splitTerms[3], ':', splitTerms[1], ':', splitTerms[2]),
+					paste0(splitTerms[3], ':', splitTerms[2], ':', splitTerms[1])
+				)
+			}
+
+			verboten <- c(verboten, swappedTerms)
+
+		}
+
+	}
+
+	verboten <- unique(verboten)
+
+	# remove formulae with undesired term(s)
+	removeThese <- numeric()
+	for (countModel in seq_along(forms)) {
+
+		if (any(forms[[countModel]] %in% verboten)) removeThese <- c(removeThese, countModel)
+
+	}
+	
+	if (length(removeThese) > 0) forms <- rlist::list.remove(forms, removeThese)
+
+	forms
+
+})
+
+#' Remove formula with unwanted combinations of variables.
+#'
+#' This function takes as an argument a list of character strings representing formulae and returns a potentially shortened list without formulae containing certain combinations of variables.
+#' @param forms List of characters each representing a formula.
+#' @param verbotenCombos Either \code{NULL} (default) in which case \code{forms} is returned without any manipulation. Alternatively, this argument can be used to specify variables or terms that should not occur in the same formula. The argument \code{verbotenCombos} is composed of a list of lists. Each sublist comprises names of two variables or terms stated as characters followed by two logical values (\code{TRUE}/\code{FALSE}). The second variable/term is removed from the model if the first is in the model. If the first logical value is \code{TRUE} then the second variable/term is removed if the first variable appears alone in the formula (e.g., not in an interaction with another variable). If the first logical value is \code{FALSE} then the second variable/term is removed if the first variable/term appears in any term (e.g., as an interaction with another term). 
+#' Examples: \itemize{
+#' \item \code{verbotenCombos=list(list('x1', 'x2', TRUE, TRUE))}: Removes \code{x2} if \code{x1} occurs in the model as a linear term.
+#' \item \code{verbotenCombos=list(list('x1', 'x2', FALSE, TRUE))}: Removes the linear term \code{x2} if \code{x1} occurred in \emph{any} term in the model.
+#' \item \code{verbotenCombos=list(list('x1', 'x2', TRUE, FALSE))}: Removes \emph{any} term with \code{x2} if the linear term \code{x1} occurred in the model.
+#' \item \code{verbotenCombos=list(list('x1', 'x2', FALSE, FALSE))}: Removes any term with \code{x2} if any term had \code{x1}.
+#' }
+#' Quadratic terms and interaction terms can also be stated, so: \itemize{
+#' \item \code{verbotenCombos=list(list('x1', 'x1:x2', TRUE, TRUE))}: Removes \code{x1:x2} if \code{x1} were in the model.
+#' \item \code{verbotenCombos=list(list('x1', 'I(x2^2)', TRUE, TRUE))}: Removes \code{I(x2^2)}.
+#' }
+#' Note that inexact matching can remove terms incorrectly if inexact matches exist between names of terms or variables.  For example, if using an inexact match, then \code{verbotenCombos(list('x1', 'x2', FALSE, FALSE))} will find any term that has an \code{x1} (e.g., \code{x11}) and if it exists, remove any term with an \code{x2} (e.g., \code{x25}). Note that reciprocally removing predictors makes little sense since, for example \code{list(list('x1', 'x2', FALSE, FALSE), list('x2', 'x1', FALSE, FALSE))} removes all formulae with \code{x2} if \code{x1} appears then tries to find any models with \code{x2} that have \code{x1} (of which there are none).
+#' @examples
+#' \dontrun{
+#' forms <- list()
+#' forms[[1]] <- 'y ~ x1 + x2 + x3'
+#' forms[[2]] <- 'y ~ x1 + x2 + x3 + I(x1^2)'
+#' forms[[3]] <- 'y ~ x1 + x2 + x3 + x1:x2'
+#' forms[[4]] <- 'y ~ x1 + x2 + x3 + x1:x2 + I(x1^2)'
+#' forms[[5]] <- 'y ~ x1 + x2 + x3 + x1:x2 + x1:x3 + x2:x3'
+#'
+#' verbotenCombos <- list(list('x1', 'x2', TRUE, TRUE))
+#' .removeVerbotenVariableCombos(forms, verbotenCombos)
+#'
+#' verbotenCombos <- list(list('x1', 'x2', FALSE, TRUE))
+#' .removeVerbotenVariableCombos(forms, verbotenCombos)
+#'
+#' verbotenCombos <- list(list('x1', 'x2', TRUE, FALSE))
+#' .removeVerbotenVariableCombos(forms, verbotenCombos)
+#'
+#' verbotenCombos <- list(list('x1', 'x2', FALSE, FALSE))
+#' .removeVerbotenVariableCombos(forms, verbotenCombos)
+#'
+#' verbotenCombos <- list(list('x1:x3', 'x2', TRUE, TRUE))
+#' .removeVerbotenVariableCombos(forms, verbotenCombos)
+#' }
+#' @return A list of character elements representing formulae.
+#' @keywords internal
+.removeVerbotenVariableCombos <- compiler::cmpfun(function(
+	forms,
+	verbotenCombos
+) {
+
+	# stores indices of models to be removed
+	removeThese <- numeric()
+
+	for (countModel in seq_along(forms)) {
+
+		for (countVerboten in seq_along(verbotenCombos)) {
+
+			# is matching exact or not?
+			exactMatch1 <- unlist(verbotenCombos[[countVerboten]])[3]=='TRUE'
+			exactMatch2 <- unlist(verbotenCombos[[countVerboten]])[4]=='TRUE'
+	
+			# does the exact term appear in the formula
+			logicalExact1 <- forms[[countModel]] %in% verbotenCombos[[countVerboten]][1]
+			logicalExact2 <- forms[[countModel]] %in% verbotenCombos[[countVerboten]][2]
+			
+			exactTerm1 <- any(logicalExact1)
+			exactTerm2 <- any(logicalExact2)
+			
+			# if so what is its index?
+			exactIndex1 <- which(logicalExact1)
+			exactIndex2 <- which(logicalExact2)
+			
+			# does a form of the term appear in the formula?
+			logicalLoose1 <- grepl(forms[[countModel]], pattern=verbotenCombos[[countVerboten]][1])
+			logicalLoose2 <- grepl(forms[[countModel]], pattern=verbotenCombos[[countVerboten]][2])
+			
+			looseTerm1 <- any(logicalLoose1)
+			looseTerm2 <- any(logicalLoose2)
+			
+			# if so what is its index?
+			looseIndex1 <- which(logicalLoose1)
+			looseIndex2 <- which(logicalLoose2)
+			
+			# want exact matches for both terms
+			if (exactMatch1 & exactMatch2) {
+								
+				if (exactTerm1 & exactTerm2) removeThese <- c(removeThese, countModel)
+	
+			# want exact match for first term, loose match for second
+			} else if (exactMatch1 & !exactMatch2) {
+	
+				if (exactTerm1 & looseTerm2) removeThese <- c(removeThese, countModel)
+				
+			# want exact match for second term, loose match for first
+			} else if (!exactMatch1 & exactMatch2) {
+	
+				if (looseTerm1 & exactTerm2) removeThese <- c(removeThese, countModel)
+				
+			# want loose match for both terms
+			} else if (!exactMatch1 & !exactMatch2) {
+
+				if (looseTerm1 & looseTerm2) removeThese <- c(removeThese, countModel)
+				
+			}
+	
+		} # next verbotenCombos list
+	
+	} # next model
+
+	if (length(removeThese) > 0) forms <- rlist::list.remove(forms, removeThese)
+	
+	forms
+	
+})
+
+#' Remove redundant model forms from a list of models
+#'
+#' This function takes as an argument a list of character vectors. Each set of character vectors represents terms in a formula, and each element of a specific term in that formula. It returns a possibly shortened list with vectors culled.
+#' @param formList List of character variables each in formula format.
+#' @return List.
+#' @keywords internal
+.removeRedundantModels <- compiler::cmpfun(function(
+	formList
+) {
+
+	formList <- lapply(formList, FUN=function(x) sort(unique(x)))
+	numTerms <- unlist(lapply(formList, length))
+	
+	keep <- list()
+	
+	for (thisTerms in unique(numTerms)) {
+	
+		listTheseTerms <- formList[which(numTerms==thisTerms)]
+		listTheseTerms <- if (thisTerms==1) { matrix(sapply(listTheseTerms, paste), nrow=1) } else { sapply(listTheseTerms, paste) }
+		
+		newTerms <- rep('eq', ncol(listTheseTerms))
+		
+		for (countRow in 1:nrow(listTheseTerms)) newTerms <- paste(newTerms, listTheseTerms[countRow, ])
+		
+		uniqueTerms <- unique(listTheseTerms, MARGIN=2)
+		
+		for (countCol in 1:ncol(uniqueTerms)) keep[[length(keep) + 1]] <- c(uniqueTerms[ , countCol])
+		
+	}
+	
+	keep
+	
+})
+

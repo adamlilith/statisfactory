@@ -15,10 +15,12 @@
 #' @return Object of class \code{matrix} and \code{histogram2d}. Columns pertain to bins of \code{x1} and rows \code{x2}. Column names and row names are mid-points of bins.
 #' @seealso \code{\link[graphics]{hist}}
 #' @examples
+#'
 #' x1 <- rnorm(1000)
 #' x2 <- 0.5 * x1 * rnorm(1000)
 #' x <- data.frame(x1=x1, x2=x2)
 #' hist2d(x)
+#'
 #' @export
 hist2d <- compiler::cmpfun(function(
 	x,
@@ -28,20 +30,22 @@ hist2d <- compiler::cmpfun(function(
 	...
 ) {
 
-	if (!(class(x) %in% c('matrix', 'data.frame'))) stop('Argument "x" in function "hist2d" (statisfactory package) must be a matrix or data frame.')
-	if (!(class(breaks1) %in% c('character', 'function', 'numeric', 'integer'))) stop('Argument "breaks1" in function "hist2d" (statisfactory package) must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
-	if (!(class(breaks2) %in% c('character', 'function', 'numeric', 'integer'))) stop('Argument "breaks2" in function "hist2d" (statisfactory package) must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
+	if (!(inherits(x, 'matrix') | inherits(x, 'data.frame'))) stop('Argument "x" in function "hist2d" (statisfactory package) must be a matrix or data frame.')
+	 
+	
+	if (!(inherits(x, 'character') | inherits(x, 'function') | inherits(x, 'numeric') | inherits(x, 'integer'))) stop('Argument "breaks1" in function "hist2d" (statisfactory package) must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
+	if (!(inherits(x, 'character') | inherits(x, 'function') | inherits(x, 'numeric') | inherits(x, 'integer'))) stop('Argument "breaks2" in function "hist2d" (statisfactory package) must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
 	if (!is.logical(right)) stop('Argument "right" in function "hist2d" (statisfactory package) must be "TRUE" or "FALSE".')
 
 	x1 <- x[ , 1]
 	x2 <- x[ , 2]
 	
 	# create breaks for bins for each variable using all available data
-	hist1 <- hist(x=x1, breaks=breaks1, freq=TRUE, plot=FALSE, right=right, ...)
+	hist1 <- graphics::hist(x=x1, breaks=breaks1, freq=TRUE, plot=FALSE, right=right, ...)
 	breaks1 <- hist1$breaks
 	mids1 <- hist1$mids
 	
-	hist2 <- hist(x=x2, breaks=breaks2, freq=TRUE, plot=FALSE, right=right, ...)
+	hist2 <- graphics::hist(x=x2, breaks=breaks2, freq=TRUE, plot=FALSE, right=right, ...)
 	breaks2 <- hist2$breaks
 	mids2 <- hist2$mids
 	
@@ -66,7 +70,7 @@ hist2d <- compiler::cmpfun(function(
 		if (length(inThisBreak1) > 0) {
 		
 			x2InThisX1 <- x2[inThisBreak1]
-			thisHist2 <- hist(x2InThisX1, breaks=breaks2, freq=TRUE, plot=FALSE, right=right, ...)
+			thisHist2 <- graphics::hist(x2InThisX1, breaks=breaks2, freq=TRUE, plot=FALSE, right=right, ...)
 			tallies[ , count1] <- thisHist2$counts
 			
 		}

@@ -13,12 +13,15 @@
 #' @return Matrix
 #' @seealso \code{\link[graphics]{hist}}
 #' @examples
-#' x <- runif(10000)
+#'
+#' set.seed(123)
+#' x <- rnorm(1000)
 #' histOverlap(x, breaks=10, graph=TRUE)
 #' histOverlap(x, breaks=c(0, 1, 10), graph=TRUE)
 #' mat <- matrix(c(seq(0, 1, by=0.1), seq(0.3, 1.3, by=0.1)), ncol=2)
 #' histOverlap(x, breaks=mat, graph=TRUE)
 #' histOverlap(x, breaks=mat, indices=TRUE)
+#'
 #' @export
 histOverlap <- compiler::cmpfun(function(
 	x,
@@ -29,15 +32,15 @@ histOverlap <- compiler::cmpfun(function(
 ) {
 
 	# process bin breaks
-	if (class(breaks) == 'data.frame') {
+	if (inherits(breaks, 'data.frame')) {
 		
 		breaks <- as.matrix(breaks[ , 1:2])
 		
-	} else if (class(breaks) == 'matrix') {
+	} else if (inherits(breaks, 'matrix')) {
 	
 		breaks <- breaks[ , 1:2]
 		
-	} else if (class(breaks) != 'matrix') {
+	} else if (!inherits(breaks, 'matrix')) {
 	
 		# calculate breaks based on number of bins
 		if (length(breaks) == 1) {
@@ -115,10 +118,10 @@ histOverlap <- compiler::cmpfun(function(
 		ylim <- range(pretty(c(0, breaks[ , 'proportion'])))
 		mids <- breaks[ , 'middle']
 		
-		plot(0, type='n', xaxt='n', yaxt='n', xlim=xlim, ylim=ylim, ylab='Proportion', xlab='Bin Midpoint', ...)
+		graphics::plot(0, type='n', xaxt='n', yaxt='n', xlim=xlim, ylim=ylim, ylab='Proportion', xlab='Bin Midpoint')
 
-		axis(1, xlim=xlim, ylim=ylim, at=mids, labels=mids, las=3, ...)
-		axis(2, xlim=xlim, ylim=ylim, at=pretty(c(0, breaks[ , 'proportion'])), ...)
+		graphics::axis(1, xlim=xlim, ylim=ylim, at=mids, labels=mids, las=3)
+		graphics::axis(2, xlim=xlim, ylim=ylim, at=pretty(c(0, breaks[ , 'proportion'])))
 
 		cols <- rep(c('red', 'green', 'orange', 'blue', 'yellow', 'gray'), length.out=nrow(breaks))
 		

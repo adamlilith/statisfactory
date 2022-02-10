@@ -1,21 +1,30 @@
 Package: statisfactory
 Type: Package
 Title: Statistical Tools
-Version: 0.3.5
-Date: 2021-05-26
-Author: Adam B. Smith <adam.smith@mobot.org>
-Maintainer: Adam B. Smith <adam.smith@mobot.org>
+Version: 1.0.0
+Date: 2022-02-09
+Authors@R: 
+	c(
+		person(
+			given = c('Adam', 'B.'),
+			family = 'Smith',
+			role = c('aut', 'cre'),
+			email = 'adam.smith@mobot.org',
+			comment = c(ORCID = '0000-0002-6420-1659')
+		)
+	)
 Description: This package contains functions for implementing
-    statistical tests and help functions thereof.
+    statistical tests and helper functions thereof.
 Depends:
 Imports:
-	rlist
+	omnibus,
+	rlist,
+	scales
 Remotes:
-	adamlilith/omnibus
 Suggests:
-License: GPL (>=3) + file LICENSE
+License: GPL (>=3)
 LazyData: true
 LazyLoad: yes
-URL: http://www.earthSkySea.org
+URL: https://github.com/statisfactory
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
