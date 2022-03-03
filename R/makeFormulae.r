@@ -2,7 +2,7 @@
 #'
 #' This functions creates a list of formulae that contain all possible linear, quadratic, and two-way interaction terms from individual terms in an object of class \code{formula}. The formulae respect marginality conditions (i.e., they will always include lower-order terms if higher-order terms are included in a formula). Note that if there are more than several terms (i.e., >=3) and interactions and/or quadratic terms are desired, then formula generation may take a long time.
 #'
-#' @param formula A \code{formula} object with \emph{just} linear terms.
+#' @param formula 	A \code{formula} object with \emph{just} linear terms.
 #' @param intercept Logical, if \code{TRUE} (default) then all models include an intercept.  If \code{FALSE} then then formula will specify that regression occurs through the origin (e.g., \code{y ~ -1 + etc.})
 #' @param interceptOnly Logical, if \code{TRUE} then an intercept-only model is included in final set.
 #' @param linearOnly Logical, if \code{TRUE} (default) then models with only linear terms are included in final set (plus other kinds of models if desired).
@@ -36,7 +36,8 @@
 #' makeFormulae(y ~ x1 + x2 + x3, ia=FALSE, maxTerms=3)
 #' verboten <- c('x1:x2', 'I(x1^2)')
 #' makeFormulae(y ~ x1 + x2 + x3, verboten=verboten, maxTerms=3)
-#' makeFormulae(y ~ x1 + x2 + x3, verbotenCombos=verbotenCombos, maxTerms=3)
+#'
+#' makeFormulae(y ~ x1 + x2 + x3, maxTerms=3)
 #' verbotenCombos <- list(list('x1', 'x2', TRUE, TRUE))
 #' makeFormulae(y ~ x1 + x2 + x3, verbotenCombos=verbotenCombos, maxTerms=3)
 #'
@@ -372,31 +373,6 @@ makeFormulae <- function(
 #' @param forms List of characters each representing a formula.
 #' @param verboten Either \code{NULL} (default) in which case \code{forms} is returned without any manipulation. Alternatively, this is a character list of terms that are not allowed to appear in any model in \code{forms}. Models with these terms are removed from \code{forms}. Note that the order of variables in interaction terms does not matter (e.g., \code{x1:x2} will cause the removal of models with this term verbatim as well as \code{x2:x1}). All possible permutations of three-way interaction terms are treated similarly.
 #' @return A list of character elements representing formulae.
-#' @examples
-#' \dontrun{
-#' forms <- list()
-#' forms[[1]] <- 'y ~ x1 + x2 + x3'
-#' forms[[2]] <- 'y ~ x1 + x2 + x3 + I(x1^2)'
-#' forms[[3]] <- 'y ~ x1 + x2 + x3 + x1:x2'
-#' forms[[4]] <- 'y ~ x1 + x2 + x3 + x1:x2 + I(x1^2)'
-#' forms[[5]] <- 'y ~ x1 + x2 + x3 + x1:x2 + x1:x3 + x2:x3'
-#' forms[[6]] <- 'y ~ x1 + x2 + x3 + x1:x2:x3'
-#'
-#' verboten <- 'x1'
-#' .removeVerbotenVariables(forms, verboten)
-#'
-#' verboten <- c('x1', 'x2')
-#' .removeVerbotenVariables(forms, verboten)
-#'
-#' verboten <- 'x1:x2'
-#' .removeVerbotenVariables(forms, verboten)
-#'
-#' verboten <- 'I(x1^2)'
-#' .removeVerbotenVariables(forms, verboten)
-#'
-#' verboten <- 'x3:x2:x1'
-#' .removeVerbotenVariables(forms, verboten)
-#' }
 #' @keywords internal
 .removeVerbotenVariables <- compiler::cmpfun(function(
 	forms,
@@ -458,30 +434,6 @@ makeFormulae <- function(
 #' \item \code{verbotenCombos=list(list('x1', 'I(x2^2)', TRUE, TRUE))}: Removes \code{I(x2^2)}.
 #' }
 #' Note that inexact matching can remove terms incorrectly if inexact matches exist between names of terms or variables.  For example, if using an inexact match, then \code{verbotenCombos(list('x1', 'x2', FALSE, FALSE))} will find any term that has an \code{x1} (e.g., \code{x11}) and if it exists, remove any term with an \code{x2} (e.g., \code{x25}). Note that reciprocally removing predictors makes little sense since, for example \code{list(list('x1', 'x2', FALSE, FALSE), list('x2', 'x1', FALSE, FALSE))} removes all formulae with \code{x2} if \code{x1} appears then tries to find any models with \code{x2} that have \code{x1} (of which there are none).
-#' @examples
-#' \dontrun{
-#' forms <- list()
-#' forms[[1]] <- 'y ~ x1 + x2 + x3'
-#' forms[[2]] <- 'y ~ x1 + x2 + x3 + I(x1^2)'
-#' forms[[3]] <- 'y ~ x1 + x2 + x3 + x1:x2'
-#' forms[[4]] <- 'y ~ x1 + x2 + x3 + x1:x2 + I(x1^2)'
-#' forms[[5]] <- 'y ~ x1 + x2 + x3 + x1:x2 + x1:x3 + x2:x3'
-#'
-#' verbotenCombos <- list(list('x1', 'x2', TRUE, TRUE))
-#' .removeVerbotenVariableCombos(forms, verbotenCombos)
-#'
-#' verbotenCombos <- list(list('x1', 'x2', FALSE, TRUE))
-#' .removeVerbotenVariableCombos(forms, verbotenCombos)
-#'
-#' verbotenCombos <- list(list('x1', 'x2', TRUE, FALSE))
-#' .removeVerbotenVariableCombos(forms, verbotenCombos)
-#'
-#' verbotenCombos <- list(list('x1', 'x2', FALSE, FALSE))
-#' .removeVerbotenVariableCombos(forms, verbotenCombos)
-#'
-#' verbotenCombos <- list(list('x1:x3', 'x2', TRUE, TRUE))
-#' .removeVerbotenVariableCombos(forms, verbotenCombos)
-#' }
 #' @return A list of character elements representing formulae.
 #' @keywords internal
 .removeVerbotenVariableCombos <- compiler::cmpfun(function(

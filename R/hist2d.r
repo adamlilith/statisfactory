@@ -30,22 +30,23 @@ hist2d <- compiler::cmpfun(function(
 	...
 ) {
 
-	if (!(inherits(x, 'matrix') | inherits(x, 'data.frame'))) stop('Argument "x" in function "hist2d" (statisfactory package) must be a matrix or data frame.')
-	 
+	if (!(inherits(x, c('matrix', 'data.frame')))) stop('Argument "x" must be a matrix or data frame.')
 	
-	if (!(inherits(x, 'character') | inherits(x, 'function') | inherits(x, 'numeric') | inherits(x, 'integer'))) stop('Argument "breaks1" in function "hist2d" (statisfactory package) must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
-	if (!(inherits(x, 'character') | inherits(x, 'function') | inherits(x, 'numeric') | inherits(x, 'integer'))) stop('Argument "breaks2" in function "hist2d" (statisfactory package) must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
-	if (!is.logical(right)) stop('Argument "right" in function "hist2d" (statisfactory package) must be "TRUE" or "FALSE".')
+	if (!(inherits(breaks1, c('character', 'function', 'numeric', 'integer')))) stop('Argument "breaks1" must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
+	if (!(inherits(breaks2, c('character', 'function', 'numeric', 'integer')))) stop('Argument "breaks2" must be a single numeric value, a vector of numeric values, a function, or a character naming a function.')
+	if (!is.logical(right)) stop('Argument "right" must be "TRUE" or "FALSE".')
 
-	x1 <- x[ , 1]
-	x2 <- x[ , 2]
+	x1 <- x[ , 1, drop=TRUE]
+	x2 <- x[ , 2, drop=TRUE]
 	
 	# create breaks for bins for each variable using all available data
-	hist1 <- graphics::hist(x=x1, breaks=breaks1, freq=TRUE, plot=FALSE, right=right, ...)
+	# hist1 <- graphics::hist(x=x1, breaks=breaks1, freq=TRUE, plot=FALSE, right=right, ...)
+	hist1 <- graphics::hist(x=x1, breaks=breaks1, plot=FALSE, right=right, ...)
 	breaks1 <- hist1$breaks
 	mids1 <- hist1$mids
 	
-	hist2 <- graphics::hist(x=x2, breaks=breaks2, freq=TRUE, plot=FALSE, right=right, ...)
+	# hist2 <- graphics::hist(x=x2, breaks=breaks2, freq=TRUE, plot=FALSE, right=right, ...)
+	hist2 <- graphics::hist(x=x2, breaks=breaks2, plot=FALSE, right=right, ...)
 	breaks2 <- hist2$breaks
 	mids2 <- hist2$mids
 	
@@ -70,14 +71,14 @@ hist2d <- compiler::cmpfun(function(
 		if (length(inThisBreak1) > 0) {
 		
 			x2InThisX1 <- x2[inThisBreak1]
-			thisHist2 <- graphics::hist(x2InThisX1, breaks=breaks2, freq=TRUE, plot=FALSE, right=right, ...)
+			# thisHist2 <- graphics::hist(x2InThisX1, breaks=breaks2, freq=TRUE, plot=FALSE, right=right, ...)
+			thisHist2 <- graphics::hist(x2InThisX1, breaks=breaks2, plot=FALSE, right=right, ...)
 			tallies[ , count1] <- thisHist2$counts
 			
 		}
 		
 	}
 	
-	class(tallies) <- c('matrix', 'histogram2d')
 	attr(tallies, 'breaks1') <- breaks1
 	attr(tallies, 'breaks2') <- breaks2
 	attr(tallies, 'right') <- right

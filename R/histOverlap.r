@@ -34,13 +34,13 @@ histOverlap <- compiler::cmpfun(function(
 	# process bin breaks
 	if (inherits(breaks, 'data.frame')) {
 		
-		breaks <- as.matrix(breaks[ , 1:2])
+		breaks <- as.matrix(breaks[ , 1:2, drop=FALSE])
 		
 	} else if (inherits(breaks, 'matrix')) {
 	
-		breaks <- breaks[ , 1:2]
+		breaks <- breaks[ , 1:2, drop=FALSE]
 		
-	} else if (!inherits(breaks, 'matrix')) {
+	} else {
 	
 		# calculate breaks based on number of bins
 		if (length(breaks) == 1) {
@@ -127,7 +127,7 @@ histOverlap <- compiler::cmpfun(function(
 		
 		for (i in 1:nrow(breaks)) {
 			
-			graphics::polygon(c(breaks[i, 'lower'], breaks[i, 'upper'], breaks[i, 'upper'], breaks[i, 'lower']), c(0, 0, breaks[i, 'proportion'], breaks[i, 'proportion']), col=scales::alpha(cols[i], 0.3))
+			graphics::polygon(c(breaks[i, 'lower'], breaks[i, 'upper'], breaks[i, 'upper'], breaks[i, 'lower']), c(0, 0, breaks[i, 'proportion'], breaks[i, 'proportion']), border=cols[i])
 			
 		}
 		

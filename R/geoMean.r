@@ -1,10 +1,12 @@
 #' Geometric mean
 #'
-#' Calculate the geometric mean, with optional removal of \code{NA}'s and propagation of zeros..)
+#' Geometric mean, with optional removal of \code{NA}'s and propagation of zeros.
 #' @param x Numeric list.
 #' @param prop0 Logical, if \code{FALSE} (default) then if any value in \code{x} equals 0 then the output will be zero. If \code{TRUE}, then zero values will be removed before calculation of the geometric mean.
 #' @param na.rm Logical, if \code{TRUE} then remove \code{NA} values first.
 #' @details Adapted from Paul McMurdie on \href{https://stackoverflow.com/questions/2602583/geometric-mean-is-there-a-built-in}{StackOverflow}.
+#' @return
+#' Numeric.
 #' @examples
 #'
 #' x <- seq(0.01, 1, by=0.01)
@@ -19,7 +21,7 @@
 geoMean <- compiler::cmpfun(function(
 	x,
 	prop0 = FALSE,
-	na.rm=TRUE
+	na.rm = TRUE
 ) {
 	
 	if (na.rm) x <- x[stats::complete.cases(x)]

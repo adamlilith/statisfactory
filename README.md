@@ -1,11 +1,9 @@
 # statisfactory
 
-This package contains various statistical tools and helper functions. You can install this package in R using these commands:
+This package contains various statistical tools and helper functions. You can install this package the usual way from CRAN or the development version (plus dependency `omnibus`) using:
 
 `remotes::install_github('adamlilith/omnibus', dependencies=TRUE)`  
 `remotes::install_github('adamlilith/statisfactory', dependencies=TRUE)`  
-
-NB: If for some reason these commands do not work, you can install the package(s) by downloading the latest zip/tar file from the `zipTarFiles` directory and installing the package(s) manually.
 
 ### Functions ###
 ## Utilities ##
@@ -23,6 +21,9 @@ NB: If for some reason these commands do not work, you can install the package(s
 * `art`: Aligned rank transform for using ANOVAs on rank data
 * `rankMulti`: Rank values by multiple tie-breaking criteria
 
+## Geometry
+* `countConnected`: Count number of contiguous "blocks" of cells \cr
+
 ## Sampling ##
 * `sampleAcross`: Permute values across two vectors or columns in two data frames or matrices
 * `sampleStrat`: Sample values stratified by one or more other variables
@@ -30,9 +31,8 @@ NB: If for some reason these commands do not work, you can install the package(s
 ## Statistics ##
 * `nagelR2`: Nagelkerge's / Craig & Uhler's R2
 
-## Plots ##
+## Histograms ##
 * `hist2d`: Two-dimensional histogram
 * `histOverlap`: Histogram with overlapping or arbitrary bins
-
 
 Adam B. Smith

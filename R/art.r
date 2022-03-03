@@ -10,9 +10,9 @@
 #' @return Data frame.
 #' @details The function successfully re-creates rankings given by \strong{ARTool} (Wobbrock et al. 2011) of data in Higgins et al. (1990) for data with 2 and 3 factors.
 #' If \code{response} is ranks and the set of ranks in each cell is the same (e.g., each cell has ranks 1, 2, and 3, but not necessarily in that order), then all values will be equal across the different ART variables.  This occurs because the center of each cell (e.g., the mean) is the same as the grand mean, so the aligned values are simply the residuals. An ANOVA on this data yields no variance across cells, so the F tests are invalid.
-#' @references Higgins, J.J., Blair, R.C., and Tashtoush, S.  1990.  The aligned rank transform procedure.  \emph{Proceedings of the Conference on Applied Statistics in Agriculture.}  Manhattan, Kansas: Kansas State University, pp. 185-195. \href{https://doi.org/10.4148/2475-7772.1443}{doi: 10.4148/2475-7772.1443}
-#' @references Peterson, K.  2002.  Six modifications of the aligned rank transform test for interaction. \emph{Journal of Modern Applied Statistical Methods} 1:100-109. \href{https://dx.doi.org/10.22237/jmasm/1020255240}{10.22237/jmasm/1020255240}
-#' @references Wobbrock, J.O., Findlater, L., Gergle, D., and Higgins, J.J.  2011. The aligned rank transform for nonparametric factorial analysis using only ANOVA procedures.  \emph{Proceedings of the ACM Conference on Human Factors in Computing Systems (CHI 2011).} Vancouver, British Columbia (May 7-12, 2011). New York: ACM Press, pp. 143-146. \href{https://dx.doi.org/10.1145/1978942.1978963}{doi: 10.1145/1978942.1978963}.
+#' @references Higgins, J.J., Blair, R.C., and Tashtoush, S.  1990.  The aligned rank transform procedure.  \emph{Proceedings of the Conference on Applied Statistics in Agriculture.}  Manhattan, Kansas: Kansas State University, pp. 185-195. \doi{10.4148/2475-7772.1443}
+#' @references Peterson, K.  2002.  Six modifications of the aligned rank transform test for interaction. \emph{Journal of Modern Applied Statistical Methods} 1:100-109. \doi{10.22237/jmasm/1020255240}
+#' @references Wobbrock, J.O., Findlater, L., Gergle, D., and Higgins, J.J.  2011. The aligned rank transform for nonparametric factorial analysis using only ANOVA procedures.  \emph{Proceedings of the ACM Conference on Human Factors in Computing Systems (CHI 2011).} Vancouver, British Columbia (May 7-12, 2011). New York: ACM Press, pp. 143-146. \doi{10.1145/1978942.1978963}.
 #' @examples
 #' x <- data.frame(
 #'    subject=c('a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c'),
@@ -30,7 +30,7 @@ art <- function(
 	response = names(x)[1],
 	factors = names(x)[2:ncol(x)],
 	subject = NULL,
-	fun = function(x) mean(x, na.rm=T),
+	fun = function(x) mean(x, na.rm=TRUE),
 	verbose = FALSE
 ) {
 

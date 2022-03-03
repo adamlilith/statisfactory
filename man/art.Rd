@@ -9,7 +9,7 @@ art(
   response = names(x)[1],
   factors = names(x)[2:ncol(x)],
   subject = NULL,
-  fun = function(x) mean(x, na.rm = T),
+  fun = function(x) mean(x, na.rm = TRUE),
   verbose = FALSE
 )
 }
@@ -48,9 +48,9 @@ x <- data.frame(
 art(x=x, response='response', factors=c('factor1', 'factor2'))
 }
 \references{
-Higgins, J.J., Blair, R.C., and Tashtoush, S.  1990.  The aligned rank transform procedure.  \emph{Proceedings of the Conference on Applied Statistics in Agriculture.}  Manhattan, Kansas: Kansas State University, pp. 185-195. \href{https://doi.org/10.4148/2475-7772.1443}{doi: 10.4148/2475-7772.1443}
+Higgins, J.J., Blair, R.C., and Tashtoush, S.  1990.  The aligned rank transform procedure.  \emph{Proceedings of the Conference on Applied Statistics in Agriculture.}  Manhattan, Kansas: Kansas State University, pp. 185-195. \doi{10.4148/2475-7772.1443}
 
-Peterson, K.  2002.  Six modifications of the aligned rank transform test for interaction. \emph{Journal of Modern Applied Statistical Methods} 1:100-109. \href{https://dx.doi.org/10.22237/jmasm/1020255240}{10.22237/jmasm/1020255240}
+Peterson, K.  2002.  Six modifications of the aligned rank transform test for interaction. \emph{Journal of Modern Applied Statistical Methods} 1:100-109. \doi{10.22237/jmasm/1020255240}
 
-Wobbrock, J.O., Findlater, L., Gergle, D., and Higgins, J.J.  2011. The aligned rank transform for nonparametric factorial analysis using only ANOVA procedures.  \emph{Proceedings of the ACM Conference on Human Factors in Computing Systems (CHI 2011).} Vancouver, British Columbia (May 7-12, 2011). New York: ACM Press, pp. 143-146. \href{https://dx.doi.org/10.1145/1978942.1978963}{doi: 10.1145/1978942.1978963}.
+Wobbrock, J.O., Findlater, L., Gergle, D., and Higgins, J.J.  2011. The aligned rank transform for nonparametric factorial analysis using only ANOVA procedures.  \emph{Proceedings of the ACM Conference on Human Factors in Computing Systems (CHI 2011).} Vancouver, British Columbia (May 7-12, 2011). New York: ACM Press, pp. 143-146. \doi{10.1145/1978942.1978963}.
 }

@@ -3,7 +3,7 @@
 #' This function scrambles values of a given column of a data frame in a stratified manner with respect to one or more other "covariate" columns. The covariate columns can be specified, as well as the width of the range of each covariate around each focal value from which to sample candidates for swapping.
 #'
 #' @param x Data frame containing at least two columns, one with numeric values and at least one more with numeric or factor values.
-#' @param col Character or integer, name or number of column in \code{x} to swap values offset.
+#' @param col Character or integer, name or number of column in \code{x} to swap values.
 #' @param w Function or numeric value >0, sets window size of \emph{non-factor} covariates as a \emph{proportion} of their range. If using a function it must work on a list of values. It can be helpful if this function accepts the argument \code{'na.rm=T'} to avoid problems with \code{NA}s in the column specified by \code{col}. The default is the standard deviation divided by the range. This reduces the correlation between erstwhile perfectly correlated variables to ~0.80 (on average). Ignored for covariates that are factors.
 #' @param d Numeric > 0, if no swappable value is found within \code{w * (max(col) - min(col))}, then \code{w} is expanded by \code{1 + d} iteratively until a value is found. Ignored for covariates that are factors.
 #' @param by Character vector or integers. Name(s) or columns numbers of covariates by which to stratify the target column. Can also specify \code{'all'} (default) to stratify by all columns with a numeric/integer/factor class except the target column.
@@ -23,6 +23,7 @@
 #' # high values of "b" and low values of "c". This tendency decreases as "w" increases.
 #'
 #' x <- data.frame(a=1:20, b=1:20, c=20:1, d=c(rep('a', 10), rep('b', 10)))
+#' x$d <- as.factor(x$d)
 #' x
 #'
 #' # scramble by all other columns
@@ -36,14 +37,14 @@
 #' # argument "w'" be to reduce the average correlation
 #' # between them to an arbitrary low level?
 #'
-#' df=data.frame(a=1:100, b=1:100)
-#' cor(df) #' perfect correlation
+#' df <- data.frame(a=1:100, b=1:100)
+#' cor(df) # perfect correlation
 #'
 #' corFrame <- data.frame()
-#' for (thisW in seq(0.1, 1, 0.1)) {
+#' for (w in seq(0.1, 1, 0.1)) {
 #'     for (countRep in 1:10) {
-#'         df2 <- sampleStrat(x=df, col=1, w=thisW)
-#'        corFrame <- rbind(corFrame, data.frame(w=thisW, cor=cor(df2)[1, 2]))
+#'        df2 <- sampleStrat(x=df, col=1, w=w)
+#'        corFrame <- rbind(corFrame, data.frame(w=w, cor=cor(df2)[1, 2]))
 #'     }
 #' }
 #'
@@ -53,7 +54,7 @@
 sampleStrat <- compiler::cmpfun(function(
 	x,
 	col,
-	w = function(x) stats::sd(x, na.rm=T) / (max(x, na.rm=TRUE) - min(x, na.rm=TRUE)),
+	w = function(x) stats::sd(x, na.rm=TRUE) / (max(x, na.rm=TRUE) - min(x, na.rm=TRUE)),
 	d = 0.1,
 	by = 'all',
 	permuteBy = TRUE
@@ -66,28 +67,20 @@ sampleStrat <- compiler::cmpfun(function(
 
 	if (d <= 0) {
 
-		warning('Argument d must be >0. Setting to default value of 0.1', immediate.=T)
+		warning('Argument d must be >0. Setting to default value of 0.1', immediate.=TRUE)
 		d <- 0.1
 	}
 
 	# get index position of target column
-	if (class(col)=='character') col <- which(names(x) == col)
+	if (inherits(col, 'character')) col <- which(names(x) == col)
 
 	# get column index position(s) of covariate column(s)
-	if (class(by) == 'character' && by == 'all') {
+	if (inherits(by, 'character')) {
 
-		by <- if (class(col) %in% 'numeric' | class(col) %in% 'integer') {
+		by <- if (by == 'all') {
 			(1:ncol(x))[-col]
 		} else {
 			(1:ncol(x))[-which(names(x) %in% col)]
-		}
-
-	} else {
-
-		by <- if (class(by) == 'numeric' | class(by) == 'integer') {
-			by
-		} else {
-			by <- which(names(x) %in% by)
 		}
 
 	}
@@ -113,10 +106,10 @@ sampleStrat <- compiler::cmpfun(function(
 		for (thisCov in by) {
 
 			# if covariate is NOT a FACTOR
-			if (class(x[ , thisCov]) != 'factor') {
+			if (!inherits(x[ , thisCov], 'factor')) {
 
 				# calculate window
-				window <- if (class(w)=='function') { w(x[ , thisCov]) } else { w }
+				window <- if (inherits(w, 'function')) { w(x[ , thisCov]) } else { w }
 
 				# make window larger if there is just 1 coordinate in the window (ie the coordinate to be swapped)
 				while (sum(thisCanSwapTo * (x[ , thisCov] >= x[targetIndex, thisCov] - window * rrange(x[ , thisCov]) & x[ , thisCov] <= x[targetIndex, thisCov] + window * rrange(x[ , thisCov]))) <= 1) {
@@ -137,7 +130,7 @@ sampleStrat <- compiler::cmpfun(function(
 				# if there are no swappable values in this window, add factor level with least difference between target value v_i and mean value of target variable v for the any given factor level
 				while (sum(thisCanSwapTo * x[ , thisCov] %in% window) <= 1) {
 
-					window <- c(window, names(which.min(abs(x[targetIndex, col] - tapply(x[!(x[ , thisCov] %in% window), col], x[which(!(x[ , thisCov] %in% window)), thisCov], function(x) mean(x, na.rm=T))))))
+					window <- c(window, names(which.min(abs(x[targetIndex, col] - tapply(x[!(x[ , thisCov] %in% window), col], x[which(!(x[ , thisCov] %in% window)), thisCov], function(x) mean(x, na.rm=TRUE))))))
 
 				}
 

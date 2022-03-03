@@ -13,8 +13,11 @@ geoMean(x, prop0 = FALSE, na.rm = TRUE)
 
 \item{na.rm}{Logical, if \code{TRUE} then remove \code{NA} values first.}
 }
+\value{
+Numeric.
+}
 \description{
-Calculate the geometric mean, with optional removal of \code{NA}'s and propagation of zeros..)
+Geometric mean, with optional removal of \code{NA}'s and propagation of zeros.
 }
 \details{
 Adapted from Paul McMurdie on \href{https://stackoverflow.com/questions/2602583/geometric-mean-is-there-a-built-in}{StackOverflow}.

@@ -3,7 +3,7 @@
 \docType{package}
 \name{statisfactory}
 \alias{statisfactory}
-\title{statisfactory: Statistical Tools for the Masses}
+\title{statisfactory: Statistical and Geometrical Tools}
 \description{
 This package contains various statistical tools and helper functions.
 }
@@ -30,6 +30,11 @@ Create an issue on \href{https://github.com/adamlilith/statisfactory/issues}{Git
 \code{\link{rankMulti}}: Rank values by multiple tie-breaking criteria \cr
 }
 
+\section{Geometry}{
+
+\code{\link{countConnected}}: Count number of contiguous "blocks" of cells \cr
+}
+
 \section{Sampling}{
 
 \code{\link{sampleAcross}}: Permute values across two vectors or columns in two data frames or matrices \cr
@@ -41,7 +46,7 @@ Create an issue on \href{https://github.com/adamlilith/statisfactory/issues}{Git
 \code{\link{nagelR2}}: Nagelkerge's / Craig & Uhler's R2 \cr
 }
 
-\section{Plots}{
+\section{Histograms}{
 
 \code{\link{histOverlap}}: Histogram with overlapping or arbitrary bins \cr
 \code{\link{hist2d}}: Two-dimensional histogram \cr

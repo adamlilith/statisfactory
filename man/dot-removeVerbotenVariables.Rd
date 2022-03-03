@@ -17,30 +17,4 @@ A list of character elements representing formulae.
 \description{
 This function takes as an argument a list of character strings representing formulae and returns a potentially shortened list without formulae containing a certain term.
 }
-\examples{
-\dontrun{
-forms <- list()
-forms[[1]] <- 'y ~ x1 + x2 + x3'
-forms[[2]] <- 'y ~ x1 + x2 + x3 + I(x1^2)'
-forms[[3]] <- 'y ~ x1 + x2 + x3 + x1:x2'
-forms[[4]] <- 'y ~ x1 + x2 + x3 + x1:x2 + I(x1^2)'
-forms[[5]] <- 'y ~ x1 + x2 + x3 + x1:x2 + x1:x3 + x2:x3'
-forms[[6]] <- 'y ~ x1 + x2 + x3 + x1:x2:x3'
-
-verboten <- 'x1'
-.removeVerbotenVariables(forms, verboten)
-
-verboten <- c('x1', 'x2')
-.removeVerbotenVariables(forms, verboten)
-
-verboten <- 'x1:x2'
-.removeVerbotenVariables(forms, verboten)
-
-verboten <- 'I(x1^2)'
-.removeVerbotenVariables(forms, verboten)
-
-verboten <- 'x3:x2:x1'
-.removeVerbotenVariables(forms, verboten)
-}
-}
 \keyword{internal}

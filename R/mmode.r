@@ -4,8 +4,11 @@
 #' @param na.rm Logical. If \code{TRUE} then remove \code{NA}s first. Otherwise fail.
 #' @return Numeric, character, or factor value.
 #' @examples
+#'
 #' mmode(round(10 * rnorm(1000, 2)))
 #' mmode(c('a', 'b', 'b', 'b', 'c', 'd', 'd'))
+#'
+#' @export
 
 mmode <- compiler::cmpfun(function(
 	x,

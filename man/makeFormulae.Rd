@@ -70,7 +70,8 @@ makeFormulae(y ~ x1 + x2 + x3, maxTerms=3)
 makeFormulae(y ~ x1 + x2 + x3, ia=FALSE, maxTerms=3)
 verboten <- c('x1:x2', 'I(x1^2)')
 makeFormulae(y ~ x1 + x2 + x3, verboten=verboten, maxTerms=3)
-makeFormulae(y ~ x1 + x2 + x3, verbotenCombos=verbotenCombos, maxTerms=3)
+
+makeFormulae(y ~ x1 + x2 + x3, maxTerms=3)
 verbotenCombos <- list(list('x1', 'x2', TRUE, TRUE))
 makeFormulae(y ~ x1 + x2 + x3, verbotenCombos=verbotenCombos, maxTerms=3)
 

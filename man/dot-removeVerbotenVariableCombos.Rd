@@ -28,29 +28,4 @@ A list of character elements representing formulae.
 \description{
 This function takes as an argument a list of character strings representing formulae and returns a potentially shortened list without formulae containing certain combinations of variables.
 }
-\examples{
-\dontrun{
-forms <- list()
-forms[[1]] <- 'y ~ x1 + x2 + x3'
-forms[[2]] <- 'y ~ x1 + x2 + x3 + I(x1^2)'
-forms[[3]] <- 'y ~ x1 + x2 + x3 + x1:x2'
-forms[[4]] <- 'y ~ x1 + x2 + x3 + x1:x2 + I(x1^2)'
-forms[[5]] <- 'y ~ x1 + x2 + x3 + x1:x2 + x1:x3 + x2:x3'
-
-verbotenCombos <- list(list('x1', 'x2', TRUE, TRUE))
-.removeVerbotenVariableCombos(forms, verbotenCombos)
-
-verbotenCombos <- list(list('x1', 'x2', FALSE, TRUE))
-.removeVerbotenVariableCombos(forms, verbotenCombos)
-
-verbotenCombos <- list(list('x1', 'x2', TRUE, FALSE))
-.removeVerbotenVariableCombos(forms, verbotenCombos)
-
-verbotenCombos <- list(list('x1', 'x2', FALSE, FALSE))
-.removeVerbotenVariableCombos(forms, verbotenCombos)
-
-verbotenCombos <- list(list('x1:x3', 'x2', TRUE, TRUE))
-.removeVerbotenVariableCombos(forms, verbotenCombos)
-}
-}
 \keyword{internal}

@@ -50,25 +50,25 @@ rmsd <- compiler::cmpfun(function(
 	na.rm = FALSE
 ) {
 
-	if (class(x1) == 'data.frame') x1 <- unlist(x1)
-	if (class(x2) == 'data.frame') x2 <- unlist(x2)
-	if (!is.null(w) && class(w) == 'data.frame') w <- unlist(w)
+	if (inherits(x1, 'data.frame')) x1 <- unlist(x1)
+	if (inherits(x2,  'data.frame')) x2 <- unlist(x2)
+	if (!is.null(w) && inherits(w, 'data.frame')) w <- unlist(w)
 	
-	if (class(x1) == 'matrix') x1 <- c(x1)
-	if (class(x2) == 'matrix') x2 <- c(x2)
-	if (!is.null(w) && class(w) == 'matrix') w <- c(w)
+	if (inherits(x1, 'matrix')) x1 <- c(x1)
+	if (inherits(x2, 'matrix')) x2 <- c(x2)
+	if (!is.null(w) && inherits(w, 'matrix')) w <- c(w)
 	
 	if (length(x1) != length(x2)) {
 		stop('Arguments "x1" and "x2" must have same length or dimensions.')
 	}
 
-	if (!is.null(w) && class(w) != 'function' & length(w) != length(x1)) {
+	if (!is.null(w) && !inherits(w, 'function') & length(w) != length(x1)) {
 		stop('Argument "w" must have the same dimensions as "x1" and "x2".')
 	}
 
 	if (is.null(w)) w <- rep(1, length(x1))
 
-	nonNas <- if (class(w) != 'function') {
+	nonNas <- if (!inherits(w, 'function')) {
 		omnibus::naOmitMulti(x1, x2, w)
 	} else {
 		omnibus::naOmitMulti(x1, x2)
@@ -76,13 +76,13 @@ rmsd <- compiler::cmpfun(function(
 	
 	x1 <- nonNas[[1]]
 	x2 <- nonNas[[2]]
-	if (class(w) != 'function') {
+	if (!inherits(w, 'function')) {
 		w <- nonNas[[3]]
 		totalWeight <- sum(w)
 	}
 	
 	out <- if (length(x1) > 0 & length(x2) > 0) {
-		if (class(w) != 'function') {
+		if (!inherits(w, 'function')) {
 			sqrt(sum(w * (x1 - x2)^2) / totalWeight)
 		} else {
 			sqrt(mean(w((x1 - x2)^2)))

@@ -7,7 +7,8 @@
 sampleStrat(
   x,
   col,
-  w = function(x) stats::sd(x, na.rm = T)/(max(x, na.rm = TRUE) - min(x, na.rm = TRUE)),
+  w = function(x) stats::sd(x, na.rm = TRUE)/(max(x, na.rm = TRUE) - min(x, na.rm =
+    TRUE)),
   d = 0.1,
   by = "all",
   permuteBy = TRUE
@@ -16,7 +17,7 @@ sampleStrat(
 \arguments{
 \item{x}{Data frame containing at least two columns, one with numeric values and at least one more with numeric or factor values.}
 
-\item{col}{Character or integer, name or number of column in \code{x} to swap values offset.}
+\item{col}{Character or integer, name or number of column in \code{x} to swap values.}
 
 \item{w}{Function or numeric value >0, sets window size of \emph{non-factor} covariates as a \emph{proportion} of their range. If using a function it must work on a list of values. It can be helpful if this function accepts the argument \code{'na.rm=T'} to avoid problems with \code{NA}s in the column specified by \code{col}. The default is the standard deviation divided by the range. This reduces the correlation between erstwhile perfectly correlated variables to ~0.80 (on average). Ignored for covariates that are factors.}
 
@@ -45,6 +46,7 @@ If there is more than one covariate, then these steps are repeated iteratively f
 # high values of "b" and low values of "c". This tendency decreases as "w" increases.
 
 x <- data.frame(a=1:20, b=1:20, c=20:1, d=c(rep('a', 10), rep('b', 10)))
+x$d <- as.factor(x$d)
 x
 
 # scramble by all other columns
@@ -58,14 +60,14 @@ sampleStrat(x=x, col=1, w=0.2, by='d', d=0.1)
 # argument "w'" be to reduce the average correlation
 # between them to an arbitrary low level?
 
-df=data.frame(a=1:100, b=1:100)
-cor(df) #' perfect correlation
+df <- data.frame(a=1:100, b=1:100)
+cor(df) # perfect correlation
 
 corFrame <- data.frame()
-for (thisW in seq(0.1, 1, 0.1)) {
+for (w in seq(0.1, 1, 0.1)) {
     for (countRep in 1:10) {
-        df2 <- sampleStrat(x=df, col=1, w=thisW)
-       corFrame <- rbind(corFrame, data.frame(w=thisW, cor=cor(df2)[1, 2]))
+       df2 <- sampleStrat(x=df, col=1, w=w)
+       corFrame <- rbind(corFrame, data.frame(w=w, cor=cor(df2)[1, 2]))
     }
 }
 
