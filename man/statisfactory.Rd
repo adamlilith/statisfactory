@@ -3,7 +3,7 @@
 \docType{package}
 \name{statisfactory}
 \alias{statisfactory}
-\title{statisfactory: Species distribution modeling and ecological niche modeling}
+\title{statisfactory: Statistical and Geometrical Tools}
 \description{
 This package contains various statistical tools and helper functions.
 }
@@ -12,39 +12,44 @@ Create an issue on \href{https://github.com/adamlilith/statisfactory/issues}{Git
 }
 \section{Utilities}{
 
-\code{\link{makeFormulae}}: Make all possible formula
+\code{\link{makeFormulae}}: Make all possible formula \cr
 }
 
 \section{Calculations}{
 
-\code{\link{euclid}}: Euclidean distance
-\code{\link{geoMean}}: Geometric mean
-\code{\link{invLogitAdj}}: Inverse logit transform robust to 0's or 1's
-\code{\link{logitAdj}}: Logit transform robust to 0's and 1's
-\code{\link{se}}: Standard error of the mean
+\code{\link{euclid}}: Euclidean distance \cr
+\code{\link{geoMean}}: Geometric mean \cr
+\code{\link{invLogitAdj}}: Inverse logit transform robust to 0's or 1's \cr
+\code{\link{logitAdj}}: Logit transform robust to 0's and 1's \cr
+\code{\link{se}}: Standard error of the mean \cr
 }
 
 \section{Data transformation}{
 
-\code{\link{art}}: Aligned rank transform for using ANOVAs on rank data
-\code{\link{rankMulti}}: Rank values by multiple tie-breaking criteria
+\code{\link{art}}: Aligned rank transform for using ANOVAs on rank data \cr
+\code{\link{rankMulti}}: Rank values by multiple tie-breaking criteria \cr
+}
+
+\section{Geometry}{
+
+\code{\link{countConnected}}: Count number of contiguous "blocks" of cells \cr
 }
 
 \section{Sampling}{
 
-\code{\link{sampleAcross}}: Permute values across two vectors or columns in two data frames or matrices
-\code{\link{sampleStrat}}: Sample values stratified by one or more other variables
+\code{\link{sampleAcross}}: Permute values across two vectors or columns in two data frames or matrices \cr
+\code{\link{sampleStrat}}: Sample values stratified by one or more other variables \cr
 }
 
 \section{Statistics}{
 
-\code{\link{nagelR2}}: Nagelkerge's / Craig & Uhler's R2
+\code{\link{nagelR2}}: Nagelkerge's / Craig & Uhler's R2 \cr
 }
 
-\section{Plots}{
+\section{Histograms}{
 
-\code{\link{histOverlap}}: Histogram with overlapping or arbitrary bins
-\code{\link{hist2d}}: Two-dimensional histogram
+\code{\link{histOverlap}}: Histogram with overlapping or arbitrary bins \cr
+\code{\link{hist2d}}: Two-dimensional histogram \cr
 }
 
 \author{

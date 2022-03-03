@@ -7,9 +7,9 @@
 invLogitAdj(x, epsilon = 0.01, base = 10, auto = FALSE)
 }
 \arguments{
-\item{x}{Numeric list.}
+\item{x}{Numeric vector.}
 
-\item{epsilon}{Value or character.  If a numeric value (typically ~0.01 or smaller), then this is added/subtracted from \code{x} to ensure log of 0 or 1 is not taken. If equal to \code{auto} then the value of \code{epsilon} is taken from the attributes of \code{x}. If \code{x} has no such attribute, a warning is given and a value of 0.01 is used.}
+\item{epsilon}{Value or character. If a numeric value (typically ~0.01 or smaller), then this is added/subtracted from \code{x} to ensure log of 0 or 1 is not taken. If equal to \code{'auto'} then the value of \code{epsilon} is taken from the attributes of \code{x}. If \code{x} has no such attribute, a warning is given and a value of 0.01 is used.}
 
 \item{base}{Base of logarithm. Use \code{base=exp(1)} for base \code{e}.}
 
@@ -22,9 +22,11 @@ Numeric.
 This function is the inverse of \code{\link[statisfactory]{logitAdj}}. That function calculates the logit of values but is robust to cases where the operand is 0 or 1. The adjusted inverse logit is equal to \code{(base^x + epsilon * base^x - epsilon) / (base^x + 1)}.
 }
 \examples{
+
 x <- seq(0, 1, by=0.1)
 y <- logitAdj(x)
 xx <- invLogitAdj(y, auto = TRUE)
+
 }
 \seealso{
 \code{\link[statisfactory]{logitAdj}}

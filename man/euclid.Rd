@@ -17,10 +17,12 @@ euclid(a, b, na.rm = FALSE)
 Numeric.
 }
 \description{
-Euclidian distance in any dimension
+Euclidian distance in one or more dimensions.
 }
 \examples{
+
 euclid(0, 5)
 euclid(c(0, 0), c(1, 1))
 euclid(c(0, 0, 0), c(1, 1, 1))
+
 }

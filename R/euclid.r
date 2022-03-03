@@ -1,14 +1,16 @@
 #' Euclidean distance
 #'
-#' Euclidian distance in any dimension
+#' Euclidian distance in one or more dimensions.
 #' @param a Numeric vector.
 #' @param b Numeric vector of same length as \code{a}.
 #' @param na.rm Logical. If \code{TRUE}, calculation ignores \code{NA}'s in \code{a} and/or \code{b}.
 #' @return Numeric.
 #' @examples
+#'
 #' euclid(0, 5)
 #' euclid(c(0, 0), c(1, 1))
 #' euclid(c(0, 0, 0), c(1, 1, 1))
+#'
 #' @export
 
 euclid <- compiler::cmpfun(function(a, b, na.rm=FALSE) {

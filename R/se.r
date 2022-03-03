@@ -1,12 +1,14 @@
 #' Standard error
 #'
 #' Calculate the standard error of the mean.
-#' @param x	Numeric list.
+#' @param x	Numeric vector.
 #' @param na.rm Logical. If TRUE then remove \code{NA}s before calculation.
 #' @return Numeric.
-#' @seealso [stats::sd()]
+#' @seealso \code{link[stats]{sd}}
 #' @examples
+#'
 #' se(1:100)
+#'
 #' @export
 
 se <- compiler::cmpfun(function(

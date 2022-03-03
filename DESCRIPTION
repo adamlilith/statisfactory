@@ -1,21 +1,34 @@
 Package: statisfactory
 Type: Package
-Title: Statistical Tools
-Version: 0.3.5
-Date: 2021-05-26
-Author: Adam B. Smith <adam.smith@mobot.org>
+Title: Statistical and Geometrical Tools
+Version: 1.0.1
+Date: 2022-03-02
+Authors@R: 
+	c(
+		person(
+			given = c('Adam', 'B.'),
+			family = 'Smith',
+			role = c('aut', 'cre'),
+			email = 'adam.smith@mobot.org',
+			comment = c(ORCID = '0000-0002-6420-1659')
+		)
+	)
 Maintainer: Adam B. Smith <adam.smith@mobot.org>
-Description: This package contains functions for implementing
-    statistical tests and help functions thereof.
+Description: A collection of statistical and geometrical tools
+	including the aligned rank transform (ART; Higgins et al.
+	1990 <doi:10.4148/2475-7772.1443>; Peterson 2002
+	<doi:10.22237/jmasm/1020255240>; Wobbrock et al. 2011
+	<doi:10.1145/1978942.1978963>), 2-D histograms and
+	histograms with overlapping bins, a function for making all
+	possible formulae within a set of constraints, amongst others.
 Depends:
 Imports:
+	omnibus,
 	rlist
-Remotes:
-	adamlilith/omnibus
 Suggests:
-License: GPL (>=3) + file LICENSE
+License: GPL (>=3)
 LazyData: true
 LazyLoad: yes
-URL: http://www.earthSkySea.org
+URL: https://github.com/adamlilith/statisfactory
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

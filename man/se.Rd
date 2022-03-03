@@ -7,7 +7,7 @@
 se(x, na.rm = FALSE)
 }
 \arguments{
-\item{x}{Numeric list.}
+\item{x}{Numeric vector.}
 
 \item{na.rm}{Logical. If TRUE then remove \code{NA}s before calculation.}
 }
@@ -18,8 +18,10 @@ Numeric.
 Calculate the standard error of the mean.
 }
 \examples{
+
 se(1:100)
+
 }
 \seealso{
-[stats::sd()]
+\code{link[stats]{sd}}
 }

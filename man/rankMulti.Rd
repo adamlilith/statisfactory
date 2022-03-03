@@ -2,7 +2,7 @@
 % Please edit documentation in R/rankMulti.r
 \name{rankMulti}
 \alias{rankMulti}
-\title{A multivariate adaptation of the \code{rank()} function}
+\title{A multivariate adaptation of the rank() function}
 \usage{
 rankMulti(x, cols = 1:ncol(x), ...)
 }
@@ -14,13 +14,15 @@ rankMulti(x, cols = 1:ncol(x), ...)
 \item{...}{Arguments to pass to \code{\link[base]{rank}}.  Note that if the \code{ties.method} argument is used the options \code{'first'} or \code{'random'} will rank by the first column uniquely such that there are no ties for subsequent columns to break.}
 }
 \value{
-Nummeric list of ranks.
+Numeric vector of ranks.
 }
 \description{
 This function ranks values in a data frame or matrix by more than one field, with ties in one field broken by subsequent fields.
 }
 \examples{
+
 x <- data.frame(x1=c('a', 'b', 'b', 'c', 'a', 'a'), x2=c(11, 2, 1, NA, 10, 11))
 rankMulti(x)
 rankMulti(x, c('x2', 'x1'))
+
 }

@@ -1,14 +1,16 @@
-#' A multivariate adaptation of the \code{rank()} function
+#' A multivariate adaptation of the rank() function
 #'
 #' This function ranks values in a data frame or matrix by more than one field, with ties in one field broken by subsequent fields.
 #' @param x Data frame or matrix.
 #' @param cols Names or indices of columns by which to rank, with first one gaining preference over the second, second over the third, etc.
 #' @param ... Arguments to pass to \code{\link[base]{rank}}.  Note that if the \code{ties.method} argument is used the options \code{'first'} or \code{'random'} will rank by the first column uniquely such that there are no ties for subsequent columns to break.
-#' @return Nummeric list of ranks.
+#' @return Numeric vector of ranks.
 #' @examples
+#'
 #' x <- data.frame(x1=c('a', 'b', 'b', 'c', 'a', 'a'), x2=c(11, 2, 1, NA, 10, 11))
 #' rankMulti(x)
 #' rankMulti(x, c('x2', 'x1'))
+#'
 #' @export
 rankMulti <- compiler::cmpfun(function(
 	x,
