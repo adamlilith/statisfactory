@@ -17,17 +17,27 @@ Create an issue on \href{https://github.com/adamlilith/statisfactory/issues}{Git
 
 \section{Calculations}{
 
-\code{\link{euclid}}: Euclidean distance \cr
 \code{\link{geoMean}}: Geometric mean \cr
 \code{\link{invLogitAdj}}: Inverse logit transform robust to 0's or 1's \cr
 \code{\link{logitAdj}}: Logit transform robust to 0's and 1's \cr
 \code{\link{se}}: Standard error of the mean \cr
 }
 
+\section{Distance measures}{
+
+\code{\link{euclid}}: Euclidean distance \cr
+\code{\link{fuzzyJacard}}: Fuzzy Jaccard index \cr
+}
+
 \section{Data transformation}{
 
 \code{\link{art}}: Aligned rank transform for using ANOVAs on rank data \cr
 \code{\link{rankMulti}}: Rank values by multiple tie-breaking criteria \cr
+}
+
+\section{Principal component analysis (PCA)}{
+
+\code{\link{backTransPCA}}: "Back-transform" PCA scores to their original values \cr
 }
 
 \section{Geometry}{
