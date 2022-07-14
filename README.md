@@ -1,6 +1,6 @@
 # statisfactory
 
-This package contains various statistical tools and helper functions. You can install this package the usual way from CRAN or the development version (plus dependency `omnibus`) using:
+This package contains various statistical tools and helper functions. You can install this package the usual way from `CRAN` or the development version (plus dependency `omnibus`) using:
 
 `remotes::install_github('adamlilith/omnibus', dependencies=TRUE)`  
 `remotes::install_github('adamlilith/statisfactory', dependencies=TRUE)`  
@@ -9,8 +9,11 @@ This package contains various statistical tools and helper functions. You can in
 ## Utilities ##
 * `makeFormulae`: Make all possible formula
 
-## Calculations ##
+## Distance ##
 * `euclid`: Euclidean distance
+* `fuzzyJaccard`: Fuzzy Jaccard index for non-binary values
+
+## Calculations ##
 * `geoMean`: Geometric mean
 * `invLogitAdj`: Probit transform robust to 0's or 1's
 * `logitAdj`: Logit transform robust to 0's and 1's
