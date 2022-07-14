@@ -21,8 +21,11 @@ This package contains various statistical tools and helper functions. You can in
 * `art`: Aligned rank transform for using ANOVAs on rank data
 * `rankMulti`: Rank values by multiple tie-breaking criteria
 
+## Principal component analysis (PCA) ##
+ *`backTransPCA`: "Back-transform" PCA scores to their original values
+
 ## Geometry
-* `countConnected`: Count number of contiguous "blocks" of cells \cr
+* `countConnected`: Count number of contiguous "blocks" of cells
 
 ## Sampling ##
 * `sampleAcross`: Permute values across two vectors or columns in two data frames or matrices

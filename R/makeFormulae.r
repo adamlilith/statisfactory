@@ -412,7 +412,7 @@ makeFormulae <- function(
 
 	}
 	
-	if (length(removeThese) > 0) forms <- rlist::list.remove(forms, removeThese)
+	if (length(removeThese) > 0) forms <- forms[-removeThese]
 
 	forms
 
@@ -500,7 +500,7 @@ makeFormulae <- function(
 	
 	} # next model
 
-	if (length(removeThese) > 0) forms <- rlist::list.remove(forms, removeThese)
+	if (length(removeThese) > 0) forms <- forms[-removeThese]
 	
 	forms
 	

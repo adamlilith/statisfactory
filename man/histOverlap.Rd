@@ -26,7 +26,7 @@ histOverlap(x, breaks, right = TRUE, graph = TRUE, indices = FALSE)
 Matrix
 }
 \description{
-Count number of values in overlapping bins
+Histogram of number of values in overlapping bins.
 }
 \examples{
 

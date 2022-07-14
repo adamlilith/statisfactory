@@ -1,5 +1,6 @@
 #' Count number of values in overlapping bins
 #'
+#' Histogram of number of values in overlapping bins.
 #' @param x Numeric values.
 #' @param breaks One integer, three numeric values, or a matrix or data frame with at least two columns:
 #' \itemize{
