@@ -12,6 +12,7 @@
 #' \code{\link{geoMean}}: Geometric mean \cr
 #' \code{\link{invLogitAdj}}: Inverse logit transform robust to 0's or 1's \cr
 #' \code{\link{logitAdj}}: Logit transform robust to 0's and 1's \cr
+#' \code{\link{psum}}: Element-wise sum (like pmin and pmax) \cr
 #' \code{\link{se}}: Standard error of the mean \cr
 #'
 #' @section Distance measures:
