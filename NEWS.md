@@ -1,6 +1,6 @@
 statisfactory 1.0.3 2022-07-13
 Added fuzzyJaccard()
-Added semiFuzzyJaccard()
+Added psum()
 Removed dependency on rlist
 
 statisfactory 1.0.2 2022-05-26

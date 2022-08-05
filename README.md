@@ -18,6 +18,7 @@ This package contains various statistical tools and helper functions. You can in
 * `invLogitAdj`: Probit transform robust to 0's or 1's
 * `logitAdj`: Logit transform robust to 0's and 1's
 * `mmode`: Modal value
+* `psum`: Element-wise sum (like pmin and pmax)
 * `se`: Standard error of the mean
 
 ## Data transformation ##
