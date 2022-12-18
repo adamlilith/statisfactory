@@ -30,4 +30,4 @@ LazyData: true
 LazyLoad: yes
 URL: https://github.com/adamlilith/statisfactory
 Encoding: UTF-8
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
