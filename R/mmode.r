@@ -14,6 +14,8 @@ mmode <- compiler::cmpfun(function(
 	x,
 	na.rm=FALSE
 ) {
+
+	### NOTE TO SELF: ALSO APPEARS IN omnibus
 	
 	if (na.rm) x <- x[!is.na(x)]
 	ux <- unique(x)
