@@ -5,7 +5,7 @@
 #' @param ... A set of vectors of the same length, a \code{matrix}, or a \code{data.table}.
 #' @param na.rm If \code{FALSE} (default), return \code{NA} if any element in a set is \code{NA}.
 #'
-#' @details Adapted from answer by Ben Bolker on \href{https://stackoverflow.com/questions/13123638/there-is-pmin-and-pmax-each-taking-na-rm-why-no-psum}[Stackoverflow].
+#' @details Adapted from answer by Ben Bolker on \href{https://stackoverflow.com/questions/13123638/there-is-pmin-and-pmax-each-taking-na-rm-why-no-psum}{StackOverflow}.
 #'
 #' @return A numeric vector.
 #' @examples
