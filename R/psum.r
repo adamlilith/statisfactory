@@ -27,7 +27,7 @@ psum <- function(..., na.rm=FALSE) {
 	
 	x <- list(...)
 	lengths <- sapply(x, length)
-	if (!length(unique(x)) == 1L) stop('All arguments must be the same length.')
+	if (!length(unique(lengths)) == 1L) stop('All arguments must be the same length.')
 
 	rowSums(do.call(cbind, x), na.rm=na.rm)
 	
