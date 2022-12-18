@@ -1,5 +1,7 @@
 # statisfactory
 
+<img align="right" src="statisfactory.png" height="223"/>
+
 This package contains various statistical tools and helper functions. You can install this package the usual way from `CRAN` or the development version (plus dependency `omnibus`) using:
 
 `remotes::install_github('adamlilith/omnibus', dependencies=TRUE)`  
