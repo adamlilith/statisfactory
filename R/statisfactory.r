@@ -17,7 +17,7 @@
 #'
 #' @section Distance measures:
 #' \code{\link{euclid}}: Euclidean distance \cr
-#' \code{\link{fuzzyJacard}}: Fuzzy Jaccard index \cr
+#' \code{\link{fuzzyJaccard}}: Fuzzy Jaccard index \cr
 #'
 #' @section Data transformation:
 #' \code{\link{art}}: Aligned rank transform for using ANOVAs on rank data \cr
