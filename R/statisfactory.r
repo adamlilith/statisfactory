@@ -43,5 +43,6 @@
 #' @docType package
 #' @author Adam B. Smith
 #' @name statisfactory
-#' @keywords internal
+#' @keywords internal 
+"_PACKAGE"
 NULL

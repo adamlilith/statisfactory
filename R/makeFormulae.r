@@ -8,7 +8,7 @@
 #' @param linearOnly Logical, if \code{TRUE} (default) then models with only linear terms are included in final set (plus other kinds of models if desired).
 #' @param quad Logical, if \code{TRUE} (default), then include quadratic terms.
 #' @param ia Logical, if \code{TRUE} (default), then include 2-way interaction terms.
-#' @param verboten Character list of terms that should not appear in the models. Ignored if \code{NULL} (default). Note that using this argument only makes sense if interaction or quadratic terms are specified (if you don't a particular term to appear anywhere in the model it will be faster to remove it from \code{formula}).
+#' @param verboten Character vector of terms that should not appear in the models. Ignored if \code{NULL} (default). Note that using this argument only makes sense if interaction or quadratic terms are specified (if you don't a particular term to appear anywhere in the model it will be faster to remove it from \code{formula}).
 #' @param verbotenCombos List of lists, used to specify specific combinations of terms that should not occur together. See section \emph{Details} below. Ignored if \code{NULL} (default).
 #' @param minTerms Either a positive integer representing the minimum number of terms required to be in a model, \emph{or} \code{NULL} (default) in which case the smallest model can have just one term.
 #' @param maxTerms Either a positive integer representing the maximum number of terms allowed to be in a model, \emph{or} \code{NULL} (default) in which case there is no practical limit on the number of terms in a model.
@@ -44,17 +44,17 @@
 #' @export
 makeFormulae <- function(
 	formula,
-	intercept=TRUE,
-	interceptOnly=TRUE,
-	linearOnly=TRUE,
-	quad=TRUE,
-	ia=TRUE,
-	verboten=FALSE,
-	verbotenCombos=NULL,
-	minTerms=NULL,
-	maxTerms=NULL,
-	returnFx=stats::as.formula,
-	verbose=FALSE
+	intercept = TRUE,
+	interceptOnly = TRUE,
+	linearOnly = TRUE,
+	quad = TRUE,
+	ia = TRUE,
+	verboten = NULL,
+	verbotenCombos = NULL,
+	minTerms = NULL,
+	maxTerms = NULL,
+	returnFx = stats::as.formula,
+	verbose = FALSE
 ) {
 
 	# get response and predictor(s)
@@ -369,11 +369,13 @@ makeFormulae <- function(
 
 #' Remove formula with unwanted terms.
 #'
-#' This function takes as an argument a list of character strings representing formulae and returns a potentially shortened list without formulae containing a certain term.
-#' @param forms List of characters each representing a formula.
+#' This function takes as an argument a vector of character strings representing formulae and returns a potentially shortened list without formulae containing a certain term.
+#'
+#' @param forms Vector of characters each representing a formula.
 #' @param verboten Either \code{NULL} (default) in which case \code{forms} is returned without any manipulation. Alternatively, this is a character list of terms that are not allowed to appear in any model in \code{forms}. Models with these terms are removed from \code{forms}. Note that the order of variables in interaction terms does not matter (e.g., \code{x1:x2} will cause the removal of models with this term verbatim as well as \code{x2:x1}). All possible permutations of three-way interaction terms are treated similarly.
 #' @return A list of character elements representing formulae.
 #' @keywords internal
+#' @noRd
 .removeVerbotenVariables <- compiler::cmpfun(function(
 	forms,
 	verboten
@@ -407,13 +409,10 @@ makeFormulae <- function(
 	# remove formulae with undesired term(s)
 	removeThese <- numeric()
 	for (countModel in seq_along(forms)) {
-
 		if (any(forms[[countModel]] %in% verboten)) removeThese <- c(removeThese, countModel)
-
 	}
 	
 	if (length(removeThese) > 0) forms <- forms[-removeThese]
-
 	forms
 
 })
@@ -517,7 +516,7 @@ makeFormulae <- function(
 ) {
 
 	formList <- lapply(formList, FUN=function(x) sort(unique(x)))
-	numTerms <- unlist(lapply(formList, length))
+	numTerms <- sapply(formList, length)
 	
 	keep <- list()
 	
@@ -525,13 +524,9 @@ makeFormulae <- function(
 	
 		listTheseTerms <- formList[which(numTerms==thisTerms)]
 		listTheseTerms <- if (thisTerms==1) { matrix(sapply(listTheseTerms, paste), nrow=1) } else { sapply(listTheseTerms, paste) }
-		
 		newTerms <- rep('eq', ncol(listTheseTerms))
-		
 		for (countRow in 1:nrow(listTheseTerms)) newTerms <- paste(newTerms, listTheseTerms[countRow, ])
-		
 		uniqueTerms <- unique(listTheseTerms, MARGIN=2)
-		
 		for (countCol in 1:ncol(uniqueTerms)) keep[[length(keep) + 1]] <- c(uniqueTerms[ , countCol])
 		
 	}

@@ -11,7 +11,7 @@ makeFormulae(
   linearOnly = TRUE,
   quad = TRUE,
   ia = TRUE,
-  verboten = FALSE,
+  verboten = NULL,
   verbotenCombos = NULL,
   minTerms = NULL,
   maxTerms = NULL,
@@ -32,7 +32,7 @@ makeFormulae(
 
 \item{ia}{Logical, if \code{TRUE} (default), then include 2-way interaction terms.}
 
-\item{verboten}{Character list of terms that should not appear in the models. Ignored if \code{NULL} (default). Note that using this argument only makes sense if interaction or quadratic terms are specified (if you don't a particular term to appear anywhere in the model it will be faster to remove it from \code{formula}).}
+\item{verboten}{Character vector of terms that should not appear in the models. Ignored if \code{NULL} (default). Note that using this argument only makes sense if interaction or quadratic terms are specified (if you don't a particular term to appear anywhere in the model it will be faster to remove it from \code{formula}).}
 
 \item{verbotenCombos}{List of lists, used to specify specific combinations of terms that should not occur together. See section \emph{Details} below. Ignored if \code{NULL} (default).}
 
