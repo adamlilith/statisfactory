@@ -3,6 +3,7 @@
 \docType{package}
 \name{statisfactory}
 \alias{statisfactory}
+\alias{statisfactory-package}
 \title{statisfactory: Statistical and Geometrical Tools}
 \description{
 This package contains various statistical tools and helper functions.
@@ -63,6 +64,13 @@ Create an issue on \href{https://github.com/adamlilith/statisfactory/issues}{Git
 \code{\link{hist2d}}: Two-dimensional histogram \cr
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/adamlilith/statisfactory}
+}
+
+}
 \author{
 Adam B. Smith
 }
