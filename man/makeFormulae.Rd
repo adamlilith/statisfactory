@@ -32,7 +32,7 @@ makeFormulae(
 
 \item{ia}{Logical: If \code{TRUE} (default), then include 2-way interaction terms.}
 
-\item{verboten}{Character vector of terms that should not appear in the models. Ignored if \code{NULL} (default). You can use this argument, for example, to exclude specific interactions (e.g., \code{'x1:x2'}, but also include the converse, \code{'x2:x1'}), or power terms (e.g., \code{'I\\(x1\\^2\\)'}). Note that to ensure matching, you need to use double backslash in front of parentheses and the caret (\code(^)) characters.}
+\item{verboten}{Character vector of terms that should not appear in the models. Ignored if \code{NULL} (default). You can use this argument, for example, to exclude specific interactions (e.g., \code{'x1:x2'}, but also include the converse, \code{'x2:x1'}), or power terms (e.g., \code{'I(x1^2)'}). Note that to ensure proper matching, you need to use a double backslash in front of each parenthesis and caret (\code(^)) character.}
 
 \item{verbotenCombos}{List of lists: Used to specify specific combinations of terms that should not occur together. See \emph{Details} below. Ignored if \code{NULL} (default).}
 
