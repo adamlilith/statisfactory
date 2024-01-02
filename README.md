@@ -10,8 +10,9 @@
 
 
 <img align="right" src="statisfactory.png" height="223"/>
+Statistical tools and helper functions, including back-transformation of principal component (PCA) scores, creatiion of all possible formulae from a set of terms while respecting marginality and user-specified constraints, stratified sampling, and 2-D histograms.
 
-Statistical tools and helper functions, including back-transformation of principal component (PCA) scores, creatiion of all possible formulae from a set of terms while respecting marginality and user-specified constraints, stratified sampling, and 2-D histograms. You can install this package the usual way from <a href="https://cran.r-project.org/package=statisfactory">`CRAN`</a>:
+You can install this package the usual way from <a href="https://cran.r-project.org/package=statisfactory">`CRAN`</a>:
 
 `install.packages('statisfactory')`  
 
