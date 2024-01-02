@@ -3,17 +3,17 @@
 #' This functions creates a list of formulae that contain all possible linear, quadratic, and two-way interaction terms from individual terms in an object of class \code{formula}. The formulae respect marginality conditions (i.e., they will always include lower-order terms if higher-order terms are included in a formula). Note that if there are more than several terms (i.e., >=3) and interactions and/or quadratic terms are desired, then formula generation may take a long time.
 #'
 #' @param formula 	A \code{formula} object with \emph{just} linear terms.
-#' @param intercept Logical, if \code{TRUE} (default) then all models include an intercept.  If \code{FALSE} then then formula will specify that regression occurs through the origin (e.g., \code{y ~ -1 + etc.})
-#' @param interceptOnly Logical, if \code{TRUE} then an intercept-only model is included in final set.
-#' @param linearOnly Logical, if \code{TRUE} (default) then models with only linear terms are included in final set (plus other kinds of models if desired).
-#' @param quad Logical, if \code{TRUE} (default), then include quadratic terms.
-#' @param ia Logical, if \code{TRUE} (default), then include 2-way interaction terms.
-#' @param verboten Character vector of terms that should not appear in the models. Ignored if \code{NULL} (default). Note that using this argument only makes sense if interaction or quadratic terms are specified (if you don't a particular term to appear anywhere in the model it will be faster to remove it from \code{formula}).
-#' @param verbotenCombos List of lists, used to specify specific combinations of terms that should not occur together. See section \emph{Details} below. Ignored if \code{NULL} (default).
+#' @param intercept Logical: If \code{TRUE} (default) then all models include an intercept.  If \code{FALSE} then then formula will specify that regression occurs through the origin (e.g., \code{y ~ -1 + etc.})
+#' @param interceptOnly Logical: If \code{TRUE} then an intercept-only model is included in final set.
+#' @param linearOnly Logical: If \code{TRUE} (default) then models with only linear terms are included in final set (plus other kinds of models if desired).
+#' @param quad Logical: If \code{TRUE} (default), then include quadratic terms.
+#' @param ia Logical: If \code{TRUE} (default), then include 2-way interaction terms.
+#' @param verboten Character vector of terms that should not appear in the models. Ignored if \code{NULL} (default). You can use this argument, for example, to exclude specific interactions (e.g., \code{'x1:x2'}, but also include the converse, \code{'x2:x1'}), or power terms (e.g., \code{'I\\(x1\\^2\\)'}). Note that to ensure matching, you need to use double backslash in front of parentheses and the caret (\code(^)) characters.
+#' @param verbotenCombos List of lists: Used to specify specific combinations of terms that should not occur together. See \emph{Details} below. Ignored if \code{NULL} (default).
 #' @param minTerms Either a positive integer representing the minimum number of terms required to be in a model, \emph{or} \code{NULL} (default) in which case the smallest model can have just one term.
 #' @param maxTerms Either a positive integer representing the maximum number of terms allowed to be in a model, \emph{or} \code{NULL} (default) in which case there is no practical limit on the number of terms in a model.
 #' @param returnFx Function used to generate the class of the output objects. Sensible functions in include \code{\link[stats]{as.formula}} (default) or \code{\link{as.character}}.
-#' @param verbose Logical, if \code{TRUE} then display progress. Default is \code{FALSE}.
+#' @param verbose Logical: If \code{TRUE} then display progress. Default is \code{FALSE}.
 #'
 #' @return A vector of formulae.
 #'
