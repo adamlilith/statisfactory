@@ -1,8 +1,8 @@
 Package: statisfactory
 Type: Package
 Title: Statistical and Geometrical Tools
-Version: 1.0.4
-Date: 2023-08-21
+Version: 1.0.5
+Date: 2024-01-02
 Authors@R: 
 	c(
 		person(

@@ -22,19 +22,19 @@ makeFormulae(
 \arguments{
 \item{formula}{A \code{formula} object with \emph{just} linear terms.}
 
-\item{intercept}{Logical, if \code{TRUE} (default) then all models include an intercept.  If \code{FALSE} then then formula will specify that regression occurs through the origin (e.g., \code{y ~ -1 + etc.})}
+\item{intercept}{Logical: If \code{TRUE} (default) then all models include an intercept.  If \code{FALSE} then then formula will specify that regression occurs through the origin (e.g., \code{y ~ -1 + etc.})}
 
-\item{interceptOnly}{Logical, if \code{TRUE} then an intercept-only model is included in final set.}
+\item{interceptOnly}{Logical: If \code{TRUE} then an intercept-only model is included in final set.}
 
-\item{linearOnly}{Logical, if \code{TRUE} (default) then models with only linear terms are included in final set (plus other kinds of models if desired).}
+\item{linearOnly}{Logical: If \code{TRUE} (default) then models with only linear terms are included in final set (plus other kinds of models if desired).}
 
-\item{quad}{Logical, if \code{TRUE} (default), then include quadratic terms.}
+\item{quad}{Logical: If \code{TRUE} (default), then include quadratic terms.}
 
-\item{ia}{Logical, if \code{TRUE} (default), then include 2-way interaction terms.}
+\item{ia}{Logical: If \code{TRUE} (default), then include 2-way interaction terms.}
 
-\item{verboten}{Character vector of terms that should not appear in the models. Ignored if \code{NULL} (default). Note that using this argument only makes sense if interaction or quadratic terms are specified (if you don't a particular term to appear anywhere in the model it will be faster to remove it from \code{formula}).}
+\item{verboten}{Character vector of terms that should not appear in the models. Ignored if \code{NULL} (default). You can use this argument, for example, to exclude specific interactions (e.g., \code{'x1:x2'}, but also include the converse, \code{'x2:x1'}), or power terms (e.g., \code{'I\\(x1\\^2\\)'}). Note that to ensure matching, you need to use double backslash in front of parentheses and the caret (\code(^)) characters.}
 
-\item{verbotenCombos}{List of lists, used to specify specific combinations of terms that should not occur together. See section \emph{Details} below. Ignored if \code{NULL} (default).}
+\item{verbotenCombos}{List of lists: Used to specify specific combinations of terms that should not occur together. See \emph{Details} below. Ignored if \code{NULL} (default).}
 
 \item{minTerms}{Either a positive integer representing the minimum number of terms required to be in a model, \emph{or} \code{NULL} (default) in which case the smallest model can have just one term.}
 
@@ -42,7 +42,7 @@ makeFormulae(
 
 \item{returnFx}{Function used to generate the class of the output objects. Sensible functions in include \code{\link[stats]{as.formula}} (default) or \code{\link{as.character}}.}
 
-\item{verbose}{Logical, if \code{TRUE} then display progress. Default is \code{FALSE}.}
+\item{verbose}{Logical: If \code{TRUE} then display progress. Default is \code{FALSE}.}
 }
 \value{
 A vector of formulae.
