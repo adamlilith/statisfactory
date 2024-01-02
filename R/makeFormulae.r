@@ -210,7 +210,7 @@ makeFormulae <- function(
 				if (!is.null(verbotenCombos)) iaModels <- .removeVerbotenVariableCombos(iaModels, verbotenCombos=verbotenCombos)
 
 				# all models with 2-way interaction terms with appropriate linear terms and some other linear terms that are not part of interaction terms
-				if (verbose) omnibus::say('Making formulae with two-way interaction and appropriate linear terms plus\n   other linear terms that are not part of interaction terms...')
+				if (verbose) omnibus::say('Making formulae with two-way interaction and appropriate linear terms plus other linear terms that are not part of interaction terms...')
 
 				for (countIa in seq_along(iaModels)) {
 
@@ -290,7 +290,7 @@ makeFormulae <- function(
 			### add linear terms that may not be in combined quad and interaction models
 			############################################################################
 
-			if (verbose) omnibus::say('Making formulae with all possible two-way interaction, quadratic,\n    and appropriate linear terms plus linear terms not already in formula...')
+			if (verbose) omnibus::say('Making formulae with all possible two-way interaction, quadratic, and appropriate linear terms plus linear terms not already in formula...')
 
 			# if there are still any IA quadratic models
 			if (length(iaQuadModels) > 0) {
