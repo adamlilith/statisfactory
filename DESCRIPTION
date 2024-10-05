@@ -29,5 +29,6 @@ License: GPL (>=3)
 LazyData: true
 LazyLoad: yes
 URL: https://github.com/adamlilith/statisfactory
+BugReports: https://github.com/adamlilith/statisfactory/issues
 Encoding: UTF-8
 RoxygenNote: 7.2.3

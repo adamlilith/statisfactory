@@ -44,7 +44,7 @@ You may need to install package `remotes` first.
 * `rankMulti()`: Rank values by multiple tie-breaking criteria
 
 ## Principal component analysis (PCA) ##
- *`backTransPCA()`: "Back-transform" PCA scores to their original values
+* `backTransPCA()`: "Back-transform" PCA scores to their original values
 
 ## Geometry
 * `countConnected()`: Count number of contiguous "blocks" of cells
