@@ -6,3 +6,4 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.github
+^statisfactory_workspace.code-workspace
